@@ -16,7 +16,7 @@
 <body>${SAMPLE}${html.replace(/YOUR_ONETAG_KEY/g, previewKey)}</main></body></html>`;
 
   // Thumbnails are the block's own markup, scripts stripped, scaled down. No API calls.
-  const thumb = (html) => `<!doctype html><html><head><meta charset="utf-8"><style>body{margin:0;padding:16px;width:560px;font:16px/1.5 "IBM Plex Sans",system-ui,sans-serif;color:#111;background:#fff;overflow:hidden}</style></head><body>${html.replace(/<script[\s\S]*?<\/script>/g, "").replace(/<!--[\s\S]*?-->/g, "")}</body></html>`;
+  const thumb = (html, b) => `<!doctype html><html><head><meta charset="utf-8"><style>body{margin:0;padding:16px;width:560px;font:16px/1.5 "IBM Plex Sans",system-ui,sans-serif;color:#111;background:#fff;overflow:hidden}.cap{margin:10px 0 0;color:#94a3b8;font-size:15px}</style></head><body>${html.replace(/<script[\s\S]*?<\/script>/g, "").replace(/<!--[\s\S]*?-->/g, "")}<p class="cap">${b.description}</p></body></html>`;
 
   async function renderThumbs() {
     const groups = [...new Set(blocks.map((b) => b.group))];
@@ -27,7 +27,7 @@
         a.href = "#" + b.id; a.dataset.id = b.id; a.className = "thumb"; a.title = b.title;
         a.innerHTML = `<span class="thumb-frame"><iframe loading="lazy" tabindex="-1" aria-hidden="true" sandbox=""></iframe></span><span class="thumb-label">${b.title}</span>`;
         thumbs.append(a);
-        fetch(b.file).then((r) => r.text()).then((src) => { b.source = src; a.querySelector("iframe").srcdoc = thumb(src); });
+        fetch(b.file).then((r) => r.text()).then((src) => { b.source = src; a.querySelector("iframe").srcdoc = thumb(src, b); });
       }
     }
   }
