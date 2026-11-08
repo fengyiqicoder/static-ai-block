@@ -1,6 +1,8 @@
 # Static AI Block
 
-Copy-paste AI blocks for any static website. Ask this page, summarize, explain a selection, translate, FAQ bot, draft a reply, rewrite, extract to JSON, smart search, alt text, quiz, explain code. Each block is plain HTML and vanilla JavaScript: copy it, paste it into any page, replace one key, it works. One script tag, no backend, no framework, no build step.
+**No install. Copy a block, paste it into any static page, replace one key. It works.**
+
+Free AI blocks for static websites. Ask this page, summarize, explain a selection, translate, FAQ bot, draft a reply, rewrite, extract to JSON, smart search, alt text, quiz, explain code. Each block is plain HTML and vanilla JavaScript: copy it, paste it into any page, replace one key, it works. One script tag, no backend, no framework, no build step.
 
 **Browse and try them:** https://fengyiqicoder.github.io/static-ai-block/
 

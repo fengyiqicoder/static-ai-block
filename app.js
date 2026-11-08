@@ -45,6 +45,7 @@
     codeText.textContent = source;
     frame.srcdoc = shell(source, dark);
     openLink.href = `preview.html#${b.id}`;
+    document.getElementById("page").href = b.page;
   }
 
   toggleCode.addEventListener("click", () => {
@@ -67,6 +68,10 @@
     catch { code.hidden = false; frameWrap.hidden = true; toggleCode.setAttribute("aria-pressed", "true"); }
   });
   window.addEventListener("hashchange", () => show(location.hash.slice(1)));
+  // Live star count in the banner (public repos only; fails silently otherwise).
+  fetch("https://api.github.com/repos/fengyiqicoder/static-ai-block").then((r) => r.ok ? r.json() : null).then((d) => {
+    if (d && typeof d.stargazers_count === "number") document.getElementById("star-count").textContent = `★ ${d.stargazers_count.toLocaleString()}`;
+  }).catch(() => {});
 
   fetch("blocks.json").then((r) => r.json()).then(async (data) => {
     blocks = data.blocks; await renderThumbs(); show(location.hash.slice(1) || blocks[0].id);

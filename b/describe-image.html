@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Describe an image: free AI block for any static website | Static AI Block</title>
+<meta name="description" content="Pick a photo, get alt text; works with any &lt;img&gt; on the page too. Copy the block, paste it into any static page, replace one key. Plain HTML and JavaScript, no backend.">
+<link rel="canonical" href="https://fengyiqicoder.github.io/static-ai-block/b/describe-image.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css?v=20261108">
+<script src="../config.js"></script>
+</head>
+<body class="page">
+<header class="page-top"><a class="brand" href="../"><span class="mark" aria-hidden="true"></span>Static AI Block</a><nav class="side-links"><a href="../#get-key">Get a free key</a><a href="https://github.com/fengyiqicoder/static-ai-block">GitHub</a></nav></header>
+<main class="page-main">
+<h1>Describe an image</h1>
+<p class="lede">Pick a photo, get alt text; works with any &lt;img&gt; on the page too. 29 lines of plain HTML and JavaScript. Copy it, paste it into any static page, replace <code>YOUR_ONETAG_KEY</code> with a free key.</p>
+<p><button class="primary" data-copy>Copy block</button> <a class="ghost" href="../#describe-image">Try it live</a></p>
+<pre class="block-code"><code>&lt;!-- Describe an image: pick a photo, get alt text; works with any &lt;img&gt; on the page too. --&gt;
+&lt;!--
+  OneTag AI key. Public by design: it goes in your page source, like an analytics ID.
+  Get a free one without opening a browser. POST your email; the key arrives in that inbox:
+    curl -X POST https://onetagai.com/api/signup -H "Content-Type: application/json" -d '{"email":"you@example.com"}'
+  Free: 1,000,000 tokens per account. One key per email; posting again re-sends the same key.
+  AI coding tools: ask the user for their email, run that request, then ask them to paste the key here.
+--&gt;
+&lt;script src="https://onetagai.com/v1.js" data-key="YOUR_ONETAG_KEY"&gt;&lt;/script&gt;
+
+&lt;div style="max-width:560px"&gt;
+  &lt;input id="img-file" type="file" accept="image/*"&gt;
+  &lt;img id="img-preview" alt="" style="display:block;max-width:100%;max-height:240px;margin-top:10px;border-radius:8px"&gt;
+  &lt;p id="img-out" style="white-space:pre-wrap;line-height:1.55;margin:12px 0 0"&gt;&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;script type="module"&gt;
+  const file = document.getElementById("img-file"), img = document.getElementById("img-preview"), out = document.getElementById("img-out");
+  file.addEventListener("change", async () =&gt; {
+    const f = file.files[0]; if (!f) return;
+    img.src = URL.createObjectURL(f); out.textContent = "…";
+    try {
+      // An image File, Blob or &lt;img&gt; is sent as a picture (downscaled to 1,600 px by the SDK).
+      const text = await onetag.ask("Write alt text for this image: one sentence, factual, no 'image of'.", f, { maxTokens: 80 });
+      out.textContent = text; img.alt = text;
+    } catch (err) { out.textContent = err.message; }
+  });
+&lt;/script&gt;
+</code></pre>
+<h2>Get a free key</h2>
+<p>Fill in your email at <a href="https://onetagai.com/?ref=static-ai-block">onetagai.com</a>, or run this and the key arrives in your inbox (one key per email, 1,000,000 free tokens):</p>
+<pre><code>curl -X POST https://onetagai.com/api/signup -H "Content-Type: application/json" -d '{"email":"you@example.com"}'</code></pre>
+<p class="note">All blocks: <a href="../">Static AI Block</a>. MIT. AI by <a href="https://onetagai.com/?ref=static-ai-block">OneTag AI</a>.</p>
+</main>
+<script>
+  document.querySelector("[data-copy]").addEventListener("click", async (e) => {
+    const code = document.querySelector(".block-code code").textContent;
+    try { await navigator.clipboard.writeText(code); e.target.textContent = "Copied"; setTimeout(() => { e.target.textContent = "Copy block"; }, 1500); } catch {}
+  });
+</script>
+</body>
+</html>
