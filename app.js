@@ -25,7 +25,7 @@ ${source}`;
   function card(b) {
     const el = document.createElement("article");
     el.className = "card"; el.id = b.id;
-    el.innerHTML = `
+    el.innerHTML = `<div class="card-inner">
       <div class="card-live"><iframe loading="lazy" title="${b.title} (live)" sandbox="allow-scripts allow-same-origin allow-forms allow-modals"></iframe></div>
       <pre class="card-code" hidden><code></code></pre>
       <div class="card-bar">
@@ -36,13 +36,14 @@ ${source}`;
           <button type="button" class="button small" data-ai>Copy to AI</button>
           <a class="ghost" href="${b.page}">Page</a>
         </span>
-      </div>`;
+      </div></div>`;
     const frame = el.querySelector("iframe"), code = el.querySelector(".card-code"), live = el.querySelector(".card-live");
     const codeBtn = el.querySelector("[data-code]"), copyBtn = el.querySelector("[data-copy]"), aiBtn = el.querySelector("[data-ai]");
     let source = "";
     fetch(b.file).then((r) => r.text()).then((src) => { source = src; frame.srcdoc = shell(src, b); code.querySelector("code").textContent = src; });
     codeBtn.addEventListener("click", () => {
       const show = code.hidden; code.hidden = !show; live.hidden = show; codeBtn.setAttribute("aria-pressed", String(show));
+      fit(el);
     });
     const flash = (btn, text) => { const t = btn.textContent; btn.textContent = text; setTimeout(() => { btn.textContent = t; }, 1500); };
     copyBtn.addEventListener("click", async () => { try { await navigator.clipboard.writeText(source); flash(copyBtn, "Copied"); } catch { code.hidden = false; live.hidden = true; } });
@@ -50,13 +51,28 @@ ${source}`;
     return el;
   }
 
-  // Cards fit their content: each preview reports its height.
+  // Masonry: the grid has 8px rows; each card spans as many rows as its content needs,
+  // so cards of different heights pack without gaps and keep their left-to-right order.
+  const ROW = 8, GAP = 22;
+  const fit = (card) => {
+    const inner = card.querySelector(".card-inner");
+    card.style.gridRowEnd = "span " + Math.ceil((inner.getBoundingClientRect().height + GAP) / ROW);
+  };
+  const fitAll = () => document.querySelectorAll(".card").forEach(fit);
+  window.addEventListener("resize", fitAll);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitAll);
+
+  // Each preview reports its content height; the card follows, then the masonry re-fits.
   window.addEventListener("message", (e) => {
     if (!e.data || typeof e.data.sabHeight !== "number") return;
-    for (const f of document.querySelectorAll(".card iframe")) if (f.contentWindow === e.source) f.style.height = Math.max(120, e.data.sabHeight + 2) + "px";
+    for (const f of document.querySelectorAll(".card iframe")) if (f.contentWindow === e.source) {
+      f.style.height = Math.max(120, e.data.sabHeight + 2) + "px";
+      fit(f.closest(".card"));
+    }
   });
   fetch("blocks.json").then((r) => r.json()).then((data) => {
     for (const b of data.blocks) grid.append(card(b));
+    fitAll();
   });
 
   // Live star count (public repos only; fails silently otherwise).
