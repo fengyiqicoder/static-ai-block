@@ -1,5 +1,7 @@
 # Static AI Block
 
+[![Powered by OneTag AI](https://img.shields.io/badge/Powered%20by-OneTag%20AI-0b5fff)](https://onetagai.com/?ref=static-ai-block) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
 **No install. Copy a block, paste it into any static page, replace one key. It works.**
 
 Free AI blocks for static websites. Ask this page, summarize, explain a selection, translate, FAQ bot, draft a reply, rewrite, extract to JSON, smart search, alt text, quiz, explain code. Each block is plain HTML and vanilla JavaScript: copy it, paste it into any page, replace one key, it works. One script tag, no backend, no framework, no build step.
@@ -47,6 +49,10 @@ Every account gets 1,000,000 free tokens. The key is public by design, like an a
 ## Add a block
 
 Drop an `.html` file into `blocks/` whose first line is `<!-- Title: one-sentence description. -->`, keep the key comment and script tag at the top, run `node build.mjs`, and it appears in the gallery. Blocks should be self-contained: no dependencies, inline styles, under 60 lines.
+
+## Powered by OneTag AI
+
+Every block calls [OneTag AI](https://onetagai.com/?ref=static-ai-block) from the browser, so the site stays static: no server, no API key in the page, a free allowance of 1,000,000 tokens per account. The blocks are MIT; use them with OneTag or point them at your own compatible endpoint.
 
 ## License
 

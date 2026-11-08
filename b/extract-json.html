@@ -14,7 +14,7 @@
 <header class="page-top"><a class="brand" href="../">Static AI Block</a><nav class="side-links"><a href="../#blocks">All blocks</a><a href="../#get-key">Get a free key</a><a href="https://github.com/fengyiqicoder/static-ai-block">GitHub</a></nav></header>
 <main class="page-main">
 <h1>Extract to JSON</h1>
-<p class="lede">Turn messy text into structured fields. 49 lines of plain HTML and JavaScript. Copy it, paste it into any static page, replace <code>YOUR_ONETAG_KEY</code> with a free key.</p>
+<p class="lede">Turn messy text into structured fields. 51 lines of plain HTML and JavaScript. Copy it, paste it into any static page, replace <code>YOUR_ONETAG_KEY</code> with a free key.</p>
 <p class="actions"><button class="button" data-copy>Copy block</button> <button class="button secondary" data-ai>Copy to AI</button></p>
 <div class="live"><iframe title="Extract to JSON (live)" sandbox="allow-scripts allow-same-origin allow-forms allow-modals"></iframe></div>
 <h2>The code</h2>
@@ -43,6 +43,7 @@
 .sab-out{margin:12px 0 0;padding:12px 14px;border-radius:9px;background:#f3f4f6;white-space:pre-wrap;min-height:1.5em}
 .sab-out:empty{display:none}
 .sab-note{margin:10px 0 0;font-size:12px;color:#9ca3af}
+.sab-powered{margin:12px 0 0;text-align:right;font-size:11px;color:#9ca3af}.sab-powered a{color:inherit;text-decoration:none}.sab-powered a:hover{text-decoration:underline}
 &lt;/style&gt;
 
 &lt;section class="sab" id="sab-extract"&gt;
@@ -51,6 +52,7 @@
   &lt;textarea class="sab-area" id="ext-in" rows="4"&gt;Hi, this is Dana Whitfield from Larkspur Studio. We'd like 40 units of the oak desk organizer delivered to 12 Rue Cler, Paris by March 14. Budget is around 1,900 EUR. Reach me at dana@larkspur.example.&lt;/textarea&gt;
   &lt;div class="sab-row" style="margin-top:10px"&gt;&lt;button class="sab-btn" id="ext-btn" type="button"&gt;Extract fields&lt;/button&gt;&lt;/div&gt;
   &lt;pre class="sab-out" id="ext-out" style="font:13px/1.5 ui-monospace,Menlo,monospace"&gt;&lt;/pre&gt;
+&lt;p class="sab-powered"&gt;&lt;a href="https://onetagai.com/?ref=static-ai-block" rel="noopener"&gt;Powered by OneTag AI&lt;/a&gt;&lt;/p&gt;
 &lt;/section&gt;
 
 &lt;script type="module"&gt;

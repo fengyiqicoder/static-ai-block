@@ -24,6 +24,7 @@ h1{font-size:clamp(32px,6vw,48px);line-height:1.15;letter-spacing:-.02em;margin:
 .button.secondary:hover{border-color:var(--text);background:transparent;color:var(--text)}
 .button.small{padding:7px 14px;font-size:14px}
 .snippet{margin:0 0 14px;padding:14px 16px;background:var(--soft);border:1px solid var(--line);border-radius:10px;font:14px/1.6 var(--mono);overflow-x:auto}
+.powered{margin:0 0 10px;color:var(--muted);font-size:15px}
 .star-line{display:inline-block;color:var(--muted);font-size:14px;text-decoration:none}
 .star-line:hover{color:var(--text);text-decoration:underline}
 #star-count{margin-left:6px;color:var(--text);font-weight:600}

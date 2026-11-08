@@ -8,7 +8,7 @@
       "title": "Summarize this page",
       "description": "Summarize this page in one click.",
       "group": "Read",
-      "lines": 54
+      "lines": 56
     },
     {
       "id": "ask-this-page",
@@ -17,7 +17,7 @@
       "title": "Ask this page",
       "description": "Ask anything about this page and get an answer from it.",
       "group": "Read",
-      "lines": 59
+      "lines": 61
     },
     {
       "id": "faq-bot",
@@ -26,7 +26,7 @@
       "title": "FAQ bot",
       "description": "Answers only from your FAQ, says \"I don't know\" otherwise.",
       "group": "Chat",
-      "lines": 60
+      "lines": 62
     },
     {
       "id": "rewrite",
@@ -35,7 +35,7 @@
       "title": "Rewrite",
       "description": "Make any text shorter, longer, formal or friendly.",
       "group": "Write",
-      "lines": 54
+      "lines": 56
     },
     {
       "id": "translate-page",
@@ -44,7 +44,7 @@
       "title": "Translate this page",
       "description": "Translate the whole page into another language.",
       "group": "Read",
-      "lines": 61
+      "lines": 63
     },
     {
       "id": "draft-reply",
@@ -53,7 +53,7 @@
       "title": "Draft a reply",
       "description": "Paste a message, get a reply in the tone you pick.",
       "group": "Write",
-      "lines": 51
+      "lines": 53
     },
     {
       "id": "extract-json",
@@ -62,7 +62,7 @@
       "title": "Extract to JSON",
       "description": "Turn messy text into structured fields.",
       "group": "Extract",
-      "lines": 49
+      "lines": 51
     },
     {
       "id": "smart-search",
@@ -71,7 +71,7 @@
       "title": "Smart search",
       "description": "Search a list in plain words; matches light up.",
       "group": "Extract",
-      "lines": 60
+      "lines": 62
     },
     {
       "id": "explain-selection",
@@ -80,7 +80,7 @@
       "title": "Explain any selection",
       "description": "Select any text on the page to get it explained.",
       "group": "Read",
-      "lines": 61
+      "lines": 63
     },
     {
       "id": "describe-image",
@@ -89,7 +89,7 @@
       "title": "Describe an image",
       "description": "Get alt text for any image.",
       "group": "See",
-      "lines": 53
+      "lines": 55
     },
     {
       "id": "quiz",
@@ -98,7 +98,7 @@
       "title": "Quiz from this page",
       "description": "Turn this page into a three-question quiz.",
       "group": "Learn",
-      "lines": 55
+      "lines": 57
     },
     {
       "id": "code-explain",
@@ -107,7 +107,7 @@
       "title": "Explain code",
       "description": "Adds an Explain button to every code block.",
       "group": "Learn",
-      "lines": 52
+      "lines": 54
     }
   ]
 }
