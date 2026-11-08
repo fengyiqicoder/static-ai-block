@@ -1,12 +1,12 @@
-# AI Blocks
+# Static AI Block
 
-Copy-paste AI blocks for any website. Ask this page, summarize, explain a selection, translate, FAQ bot, draft a reply, rewrite, extract to JSON, smart search, alt text, quiz, explain code. Each block is plain HTML and vanilla JavaScript: copy it, paste it into any page, replace one key, it works. One script tag, no backend, no framework, no build step.
+Copy-paste AI blocks for any static website. Ask this page, summarize, explain a selection, translate, FAQ bot, draft a reply, rewrite, extract to JSON, smart search, alt text, quiz, explain code. Each block is plain HTML and vanilla JavaScript: copy it, paste it into any page, replace one key, it works. One script tag, no backend, no framework, no build step.
 
-**Browse and try them:** https://fengyiqicoder.github.io/ai-blocks/
+**Browse and try them:** https://fengyiqicoder.github.io/static-ai-block/
 
 ## How a block works
 
-Every block loads the [OneTag AI](https://onetagai.com/?ref=ai-blocks) script and calls `onetag.ask(prompt, input, options)` from the browser. `input` can be a string, any element on the page (its text), a form, an image, or a plain object. Answers can stream in, or come back as parsed JSON with `json: true`.
+Every block loads the [OneTag AI](https://onetagai.com/?ref=static-ai-block) script and calls `onetag.ask(prompt, input, options)` from the browser. `input` can be a string, any element on the page (its text), a form, an image, or a plain object. Answers can stream in, or come back as parsed JSON with `json: true`.
 
 ```html
 <script src="https://onetagai.com/v1.js" data-key="YOUR_ONETAG_KEY"></script>
@@ -17,7 +17,7 @@ Every block loads the [OneTag AI](https://onetagai.com/?ref=ai-blocks) script an
 
 ## Get a key
 
-Fill in your email at [onetagai.com](https://onetagai.com/?ref=ai-blocks), or run this; the key arrives in that inbox (one key per email):
+Fill in your email at [onetagai.com](https://onetagai.com/?ref=static-ai-block), or run this; the key arrives in that inbox (one key per email):
 
 ```bash
 curl -X POST https://onetagai.com/api/signup -H "Content-Type: application/json" -d '{"email":"you@example.com"}'

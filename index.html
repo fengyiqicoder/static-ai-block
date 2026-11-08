@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AI Blocks</title>
-<meta name="description" content="Copy-paste AI blocks for any website: ask this page, summarize, translate, FAQ bot, extract to JSON, alt text, quiz, rewrite. One script tag, no backend, free key.">
+<title>Static AI Block</title>
+<meta name="description" content="Copy-paste AI blocks for any static website: ask this page, summarize, translate, FAQ bot, extract to JSON, alt text, quiz, rewrite. One script tag, no backend, free key.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta property="og:title" content="AI Blocks">
-<meta property="og:description" content="Copy-paste AI blocks for any website. One script tag, no backend, free key.">
-<meta property="og:image" content="https://fengyiqicoder.github.io/ai-blocks/og.png">
+<meta property="og:title" content="Static AI Block">
+<meta property="og:description" content="Copy-paste AI blocks for any static website. One script tag, no backend, free key.">
+<meta property="og:image" content="https://fengyiqicoder.github.io/static-ai-block/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -16,45 +16,48 @@
 <script src="config.js"></script>
 </head>
 <body>
-<header class="top">
-  <a class="brand" href="./"><span class="mark" aria-hidden="true"></span>AI Blocks</a>
-  <p class="tag">Copy a block, paste it into any page, it works. One script tag, no backend.</p>
-  <nav class="links"><a href="#get-key">Get a free key</a><a href="https://github.com/fengyiqicoder/ai-blocks">GitHub</a><a href="https://onetagai.com/docs?ref=ai-blocks">OneTag docs</a></nav>
-</header>
-
 <div class="app">
-  <aside class="side" id="side" aria-label="Blocks"></aside>
+  <aside class="side" id="side" aria-label="All blocks">
+    <a class="brand" href="./"><span class="mark" aria-hidden="true"></span>Static AI Block</a>
+    <p class="side-tag">Copy a block, paste it into any static page. One script tag, no backend.</p>
+    <div id="thumbs"></div>
+    <nav class="side-links"><a href="#get-key">Get a free key</a><a href="https://github.com/fengyiqicoder/static-ai-block">GitHub</a><a href="https://onetagai.com/docs?ref=static-ai-block">OneTag docs</a></nav>
+  </aside>
 
   <main class="stage">
     <div class="bar">
       <div class="bar-text"><h1 id="b-title">Loading…</h1><p id="b-desc"></p></div>
       <div class="bar-actions">
-        <div class="seg" role="tablist"><button id="tab-preview" role="tab" aria-selected="true">Preview</button><button id="tab-code" role="tab" aria-selected="false">Code</button></div>
+        <button id="toggle-code" class="ghost" aria-pressed="false">&lt;/&gt; View code</button>
+        <div class="seg" role="group" aria-label="Preview width">
+          <button data-width="100%" aria-pressed="true" title="Desktop">Desktop</button>
+          <button data-width="768px" aria-pressed="false" title="Tablet">Tablet</button>
+          <button data-width="390px" aria-pressed="false" title="Phone">Phone</button>
+        </div>
+        <button id="toggle-dark" class="ghost" aria-pressed="false" title="Dark preview">Dark</button>
         <button id="copy" class="primary">Copy block</button>
-        <a id="open" class="ghost" target="_blank" rel="noopener">Open in new tab</a>
+        <a id="open" class="ghost" target="_blank" rel="noopener">Open</a>
       </div>
     </div>
-    <div class="panes">
-      <iframe id="preview" title="Block preview" sandbox="allow-scripts allow-same-origin allow-forms allow-modals"></iframe>
+    <div class="panes" id="panes">
+      <div class="frame-wrap"><iframe id="preview" title="Block preview" sandbox="allow-scripts allow-same-origin allow-forms allow-modals"></iframe></div>
       <pre id="code" hidden><code id="code-text"></code></pre>
     </div>
     <p class="note" id="note"></p>
+
+    <section id="get-key" class="getkey">
+      <h2>Use a block on your site</h2>
+      <ol>
+        <li>Copy a block. Paste it where you want it on your page.</li>
+        <li>Get a free key: fill in your email at <a href="https://onetagai.com/?ref=static-ai-block">onetagai.com</a>, or run this and the key arrives in your inbox:
+          <pre><code>curl -X POST https://onetagai.com/api/signup -H "Content-Type: application/json" -d '{"email":"you@example.com"}'</code></pre></li>
+        <li>Replace <code>YOUR_ONETAG_KEY</code> in the pasted block. Done. Every account gets 1,000,000 free tokens; the key is public by design, like an analytics ID.</li>
+      </ol>
+      <p>The previews on this page run on a shared demo key with a daily budget. If they stop answering, the budget is gone for today; your own key is unaffected.</p>
+      <p>MIT. Blocks are plain HTML and vanilla JS, no framework, no build step. AI by <a href="https://onetagai.com/?ref=static-ai-block">OneTag AI</a>.</p>
+    </section>
   </main>
 </div>
-
-<section id="get-key" class="getkey">
-  <h2>Use a block on your site</h2>
-  <ol>
-    <li>Copy a block. Paste it where you want it on your page.</li>
-    <li>Get a free key: fill in your email at <a href="https://onetagai.com/?ref=ai-blocks">onetagai.com</a>, or run this and the key arrives in your inbox:
-      <pre><code>curl -X POST https://onetagai.com/api/signup -H "Content-Type: application/json" -d '{"email":"you@example.com"}'</code></pre></li>
-    <li>Replace <code>YOUR_ONETAG_KEY</code> in the pasted block. Done. Every account gets 1,000,000 free tokens; the key is public by design, like an analytics ID.</li>
-  </ol>
-  <p>The previews on this page run on a shared demo key with a daily budget. If they stop answering, the budget is gone for today; your own key is unaffected.</p>
-</section>
-
-<footer class="foot">MIT. Blocks are plain HTML and vanilla JS, no framework, no build step. AI by <a href="https://onetagai.com/?ref=ai-blocks">OneTag AI</a>.</footer>
-
 <script src="app.js"></script>
 </body>
 </html>
