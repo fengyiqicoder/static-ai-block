@@ -9,7 +9,7 @@
   const READS_PAGE = new Set(["ask-this-page","summarize-page","explain-selection","translate-page","quiz","code-explain"]);
   const shell = (html, b) => `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <style>body{margin:0;padding:14px;background:#f5f7fb;font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#0b1020}</style></head>
-<body>${READS_PAGE.has(b.id) ? SAMPLE : "<main>"}${html.replace(/YOUR_ONETAG_KEY/g, previewKey)}</main></body></html>`;
+<body>${READS_PAGE.has(b.id) ? SAMPLE : "<main>"}${html.replace(/YOUR_ONETAG_KEY/g, previewKey)}</main><script>new ResizeObserver(() => parent.postMessage({ sabHeight: document.documentElement.scrollHeight }, "*")).observe(document.body);</script></body></html>`;
 
   const toAI = (b, source) => `Add this AI block to my site. It uses OneTag AI; docs for the API are at https://onetagai.com/llms.txt
 
@@ -50,6 +50,11 @@ ${source}`;
     return el;
   }
 
+  // Cards fit their content: each preview reports its height.
+  window.addEventListener("message", (e) => {
+    if (!e.data || typeof e.data.sabHeight !== "number") return;
+    for (const f of document.querySelectorAll(".card iframe")) if (f.contentWindow === e.source) f.style.height = Math.max(180, e.data.sabHeight + 4) + "px";
+  });
   fetch("blocks.json").then((r) => r.json()).then((data) => {
     for (const b of data.blocks) grid.append(card(b));
   });
