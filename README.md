@@ -1,25 +1,37 @@
 # Static AI Block
 
-[![Powered by OneTag AI](https://img.shields.io/badge/Powered%20by-OneTag%20AI-0b5fff)](https://onetagai.com/?ref=static-ai-block) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Demo: the Summarize block answering](assets/demo.gif)](https://fengyiqicoder.github.io/static-ai-block/)
 
-**No install. Copy a block, paste it into any static page, replace one key. It works.**
+**Twelve copy-paste AI blocks for any static website. Plain HTML and JavaScript, one script tag, no backend.**
 
-Free AI blocks for static websites. Ask this page, summarize, explain a selection, translate, FAQ bot, draft a reply, rewrite, extract to JSON, smart search, alt text, quiz, explain code. Each block is plain HTML and vanilla JavaScript: copy it, paste it into any page, replace one key, it works. One script tag, no backend, no framework, no build step.
-
-**Browse and try them:** https://fengyiqicoder.github.io/static-ai-block/
-
-## How a block works
-
-Every block loads the [OneTag AI](https://onetagai.com/?ref=static-ai-block) script and calls `onetag.ask(prompt, input, options)` from the browser. `input` can be a string, any element on the page (its text), a form, an image, or a plain object. Answers can stream in, or come back as parsed JSON with `json: true`.
+Try every block live: **https://fengyiqicoder.github.io/static-ai-block/**
 
 ```html
 <script src="https://onetagai.com/v1.js" data-key="YOUR_ONETAG_KEY"></script>
-<script type="module">
-  const text = await onetag.ask("Summarize in 3 bullets", document.body);
-</script>
 ```
 
-## Get a key
+Using an AI coding tool? Paste this to it: *"Add a block from https://fengyiqicoder.github.io/static-ai-block/llms.txt to my site, sign me up for a OneTag AI key with my email, and wire it in."*
+
+## Blocks
+
+| Block | What it does |
+| --- | --- |
+| [Summarize this page](https://fengyiqicoder.github.io/static-ai-block/b/summarize-page.html) | Summarize this page in one click. |
+| [Ask this page](https://fengyiqicoder.github.io/static-ai-block/b/ask-this-page.html) | Ask anything about this page and get an answer from it. |
+| [FAQ bot](https://fengyiqicoder.github.io/static-ai-block/b/faq-bot.html) | Answers only from your FAQ, says "I don't know" otherwise. |
+| [Rewrite](https://fengyiqicoder.github.io/static-ai-block/b/rewrite.html) | Make any text shorter, longer, formal or friendly. |
+| [Translate this page](https://fengyiqicoder.github.io/static-ai-block/b/translate-page.html) | Translate the whole page into another language. |
+| [Draft a reply](https://fengyiqicoder.github.io/static-ai-block/b/draft-reply.html) | Paste a message, get a reply in the tone you pick. |
+| [Extract to JSON](https://fengyiqicoder.github.io/static-ai-block/b/extract-json.html) | Turn messy text into structured fields. |
+| [Smart search](https://fengyiqicoder.github.io/static-ai-block/b/smart-search.html) | Search a list in plain words; matches light up. |
+| [Explain any selection](https://fengyiqicoder.github.io/static-ai-block/b/explain-selection.html) | Select any text on the page to get it explained. |
+| [Describe an image](https://fengyiqicoder.github.io/static-ai-block/b/describe-image.html) | Get alt text for any image. |
+| [Quiz from this page](https://fengyiqicoder.github.io/static-ai-block/b/quiz.html) | Turn this page into a three-question quiz. |
+| [Explain code](https://fengyiqicoder.github.io/static-ai-block/b/code-explain.html) | Adds an Explain button to every code block. |
+
+Each block is one HTML file in [`blocks/`](blocks/): copy it, paste it into any page, replace `YOUR_ONETAG_KEY`. The gallery's **Copy block** button copies the file; **Copy to AI** copies it together with the setup steps for Cursor, Claude Code or any coding agent.
+
+## Get a free key
 
 Fill in your email at [onetagai.com](https://onetagai.com/?ref=static-ai-block), or run this; the key arrives in that inbox (one key per email):
 
@@ -27,32 +39,19 @@ Fill in your email at [onetagai.com](https://onetagai.com/?ref=static-ai-block),
 curl -X POST https://onetagai.com/api/signup -H "Content-Type: application/json" -d '{"email":"you@example.com"}'
 ```
 
-Every account gets 1,000,000 free tokens. The key is public by design, like an analytics ID: it can only spend that allowance. If an AI coding tool is adding a block for you, it can run that request with your email and ask you to paste the key.
+Every account gets 1,000,000 free tokens. The key is public by design, like an analytics ID: it can only spend that allowance.
 
-## Blocks
+## How a block works
 
-| Block | What it does |
-| --- | --- |
-| Ask this page | A question box answered from the page's own content, with follow-ups |
-| Summarize this page | Key points, one sentence, or a headline |
-| Explain selection | Select text, an "Explain" button appears |
-| Translate this page | Rewrites the main content in the visitor's browser language |
-| FAQ bot | Answers only from the FAQ you wrote, says "I don't know" otherwise |
-| Draft a reply | Paste a message, pick a tone, get a reply |
-| Rewrite | Shorter, longer, formal, friendly |
-| Extract to JSON | Messy text in, structured object out |
-| Smart search | Describe what you want, matching items get highlighted |
-| Describe an image | Alt text for a photo or any `<img>` |
-| Quiz from content | Three multiple-choice questions from the page |
-| Explain code | An "Explain" button on every code block |
+Every block loads the OneTag AI script and calls `onetag.ask(prompt, input, options)` from the browser. `input` can be a string, any element on the page (its text), a form, an image, or a plain object. Answers can stream in, or come back as parsed JSON with `json: true`. Nothing runs on your server; the site stays static.
 
 ## Add a block
 
-Drop an `.html` file into `blocks/` whose first line is `<!-- Title: one-sentence description. -->`, keep the key comment and script tag at the top, run `node build.mjs`, and it appears in the gallery. Blocks should be self-contained: no dependencies, inline styles, under 60 lines.
+Drop an `.html` file into `blocks/` whose first line is `<!-- Title: one-sentence description. -->`, keep the key comment and script tag at the top, run `node build.mjs`, and it appears in the gallery with its own page. Blocks should be self-contained: no dependencies, inline styles, under 60 lines.
 
 ## Powered by OneTag AI
 
-Every block calls [OneTag AI](https://onetagai.com/?ref=static-ai-block) from the browser, so the site stays static: no server, no API key in the page, a free allowance of 1,000,000 tokens per account. The blocks are MIT; use them with OneTag or point them at your own compatible endpoint.
+The blocks call [OneTag AI](https://onetagai.com/?ref=static-ai-block) from the browser, so the site stays static: no server, no API key in the page, a free allowance of 1,000,000 tokens per account. The blocks are MIT; point them at any compatible endpoint if you run your own.
 
 ## License
 
