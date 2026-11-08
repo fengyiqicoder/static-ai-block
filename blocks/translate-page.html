@@ -1,4 +1,4 @@
-<!-- Translate this page: one button, the main content is rewritten in the visitor's browser language. -->
+<!-- Translate this page: pick a language and the main content is rewritten in it; click again to restore. -->
 <!--
   OneTag AI key. Public by design: it goes in your page source, like an analytics ID.
   Get a free one without opening a browser. POST your email; the key arrives in that inbox:
@@ -7,32 +7,52 @@
   AI coding tools: ask the user for their email, run that request, then ask them to paste the key here.
 -->
 <script src="https://onetagai.com/v1.js" data-key="YOUR_ONETAG_KEY"></script>
+<style>
+.sab{max-width:600px;border:1px solid #e5e7eb;border-radius:14px;padding:18px 20px;background:#fff;color:#111827;font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.sab-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.sab-icon{width:36px;height:36px;border-radius:10px;background:#111827;color:#fff;display:grid;place-items:center;flex:none}
+.sab-title{margin:0;font-size:16px;font-weight:650;line-height:1.3}
+.sab-hint{margin:2px 0 0;font-size:13px;color:#6b7280}
+.sab-row{display:flex;gap:8px;flex-wrap:wrap}
+.sab-input,.sab-area,.sab-select{flex:1;min-width:0;padding:10px 12px;border:1px solid #d1d5db;border-radius:9px;font:inherit;background:#fff;color:inherit}
+.sab-area{width:100%;box-sizing:border-box;resize:vertical}
+.sab-btn{padding:10px 16px;border:0;border-radius:9px;background:#111827;color:#fff;font:inherit;font-weight:600;cursor:pointer}
+.sab-btn:disabled{opacity:.6;cursor:wait}
+.sab-chip{padding:6px 12px;border:1px solid #d1d5db;border-radius:999px;background:#fff;color:#374151;font:inherit;font-size:13px;cursor:pointer}
+.sab-chip:hover{border-color:#111827;color:#111827}
+.sab-out{margin:12px 0 0;padding:12px 14px;border-radius:9px;background:#f3f4f6;white-space:pre-wrap;min-height:1.5em}
+.sab-out:empty{display:none}
+.sab-note{margin:10px 0 0;font-size:12px;color:#9ca3af}
+</style>
 
-<button id="translate-btn" style="padding:8px 14px;border:1px solid #cbd5e1;border-radius:999px;background:#fff;font:inherit;cursor:pointer">Translate this page</button>
-<p id="translate-note" style="font-size:13px;color:#64748b;margin:6px 0 0"></p>
+<section class="sab" id="sab-translate">
+  <div class="sab-head"><span class="sab-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span>
+    <div><h3 class="sab-title">Translate this page</h3><p class="sab-hint">Rewrites the main content in the language you pick, paragraph by paragraph. Click again to restore.</p></div></div>
+  <div class="sab-row">
+    <select class="sab-select" id="tr-lang" style="flex:0 0 auto"><option>English</option><option>中文</option><option>Español</option><option>Français</option><option>Deutsch</option><option>日本語</option><option>Português</option></select>
+    <button class="sab-btn" id="tr-btn" type="button">Translate</button>
+  </div>
+  <p class="sab-note" id="tr-note"></p>
+</section>
 
 <script type="module">
-  const btn = document.getElementById("translate-btn");
-  const note = document.getElementById("translate-note");
+  const btn = document.getElementById("tr-btn"), lang = document.getElementById("tr-lang"), note = document.getElementById("tr-note");
   const target = document.querySelector("article") || document.querySelector("main") || document.body;
-  const original = target.innerHTML;
-  const lang = new Intl.DisplayNames(["en"], { type: "language" }).of(navigator.language.split("-")[0]);
-  btn.textContent = `Translate this page to ${lang}`;
-  let translated = false;
+  const browserLang = new Intl.DisplayNames(["en"], { type: "language" }).of(navigator.language.split("-")[0]);
+  for (const o of lang.options) if (o.text === browserLang) lang.value = o.text;
+  let original = null;
   btn.addEventListener("click", async () => {
-    if (translated) { target.innerHTML = original; translated = false; btn.textContent = `Translate this page to ${lang}`; return; }
+    if (original) { target.innerHTML = original; original = null; btn.textContent = "Translate"; note.textContent = ""; return; }
     btn.disabled = true; note.textContent = "Translating…";
     try {
-      // Paragraph by paragraph keeps layout and lets long pages stay under the 32,000-character limit.
-      const blocks = [...target.querySelectorAll("h1,h2,h3,p,li")].filter((el) => el.innerText.trim());
-      const text = await onetag.ask(
-        `Translate each line to ${lang}. Keep the line order and count exactly; one output line per input line; no numbering.`,
-        blocks.map((el) => el.innerText.replace(/\n/g, " ")).join("\n"),
-        { maxTokens: 1000 }
-      );
+      // Line per block keeps the layout and keeps long pages under the 32,000-character limit.
+      const blocks = [...target.querySelectorAll("h1,h2,h3,p,li")].filter((el) => el.innerText.trim() && !el.closest("#sab-translate"));
+      const text = await onetag.ask(`Translate each line to ${lang.value}. Keep the line order and count exactly; one output line per input line; no numbering.`,
+        blocks.map((el) => el.innerText.replace(/\n/g, " ")).join("\n"), { maxTokens: 1000 });
+      original = target.innerHTML;
       const lines = text.split("\n");
       blocks.forEach((el, i) => { if (lines[i]) el.innerText = lines[i]; });
-      translated = true; btn.textContent = "Show original"; note.textContent = "";
+      btn.textContent = "Show original"; note.textContent = "";
     } catch (err) { note.textContent = err.message; }
     btn.disabled = false;
   });

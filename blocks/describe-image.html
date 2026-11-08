@@ -1,4 +1,4 @@
-<!-- Describe an image: pick a photo, get alt text; works with any <img> on the page too. -->
+<!-- Describe an image: alt text for any photo, from a file or any <img> on the page. -->
 <!--
   OneTag AI key. Public by design: it goes in your page source, like an analytics ID.
   Get a free one without opening a browser. POST your email; the key arrives in that inbox:
@@ -7,22 +7,45 @@
   AI coding tools: ask the user for their email, run that request, then ask them to paste the key here.
 -->
 <script src="https://onetagai.com/v1.js" data-key="YOUR_ONETAG_KEY"></script>
+<style>
+.sab{max-width:600px;border:1px solid #e5e7eb;border-radius:14px;padding:18px 20px;background:#fff;color:#111827;font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.sab-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.sab-icon{width:36px;height:36px;border-radius:10px;background:#111827;color:#fff;display:grid;place-items:center;flex:none}
+.sab-title{margin:0;font-size:16px;font-weight:650;line-height:1.3}
+.sab-hint{margin:2px 0 0;font-size:13px;color:#6b7280}
+.sab-row{display:flex;gap:8px;flex-wrap:wrap}
+.sab-input,.sab-area,.sab-select{flex:1;min-width:0;padding:10px 12px;border:1px solid #d1d5db;border-radius:9px;font:inherit;background:#fff;color:inherit}
+.sab-area{width:100%;box-sizing:border-box;resize:vertical}
+.sab-btn{padding:10px 16px;border:0;border-radius:9px;background:#111827;color:#fff;font:inherit;font-weight:600;cursor:pointer}
+.sab-btn:disabled{opacity:.6;cursor:wait}
+.sab-chip{padding:6px 12px;border:1px solid #d1d5db;border-radius:999px;background:#fff;color:#374151;font:inherit;font-size:13px;cursor:pointer}
+.sab-chip:hover{border-color:#111827;color:#111827}
+.sab-out{margin:12px 0 0;padding:12px 14px;border-radius:9px;background:#f3f4f6;white-space:pre-wrap;min-height:1.5em}
+.sab-out:empty{display:none}
+.sab-note{margin:10px 0 0;font-size:12px;color:#9ca3af}
+</style>
 
-<div style="max-width:560px">
-  <input id="img-file" type="file" accept="image/*">
-  <img id="img-preview" alt="" style="display:block;max-width:100%;max-height:240px;margin-top:10px;border-radius:8px">
-  <p id="img-out" style="white-space:pre-wrap;line-height:1.55;margin:12px 0 0"></p>
-</div>
+<section class="sab" id="sab-img">
+  <div class="sab-head"><span class="sab-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/></svg></span>
+    <div><h3 class="sab-title">Describe an image</h3><p class="sab-hint">Pick a photo and get alt text in one sentence. Works with any &lt;img&gt; on the page too.</p></div></div>
+  <div class="sab-row" style="align-items:center">
+    <label class="sab-btn" style="display:inline-block"><input id="img-file" type="file" accept="image/*" style="display:none">Choose a photo</label>
+    <button class="sab-chip" type="button" id="img-sample">Try the sample image</button>
+  </div>
+  <img id="img-preview" alt="" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='180'><rect width='320' height='180' fill='%2387CEEB'/><circle cx='250' cy='50' r='28' fill='%23FFD54A'/><rect y='120' width='320' height='60' fill='%234CAF50'/><path d='M60 120 L110 60 L160 120 Z' fill='%236B4F2A'/><rect x='95' y='95' width='30' height='25' fill='%23E53935'/></svg>" style="display:block;max-width:100%;max-height:200px;margin-top:12px;border-radius:9px">
+  <p class="sab-out" id="img-out"></p>
+</section>
 
 <script type="module">
   const file = document.getElementById("img-file"), img = document.getElementById("img-preview"), out = document.getElementById("img-out");
-  file.addEventListener("change", async () => {
-    const f = file.files[0]; if (!f) return;
-    img.src = URL.createObjectURL(f); out.textContent = "…";
+  async function describe(source) {
+    out.textContent = "…";
     try {
       // An image File, Blob or <img> is sent as a picture (downscaled to 1,600 px by the SDK).
-      const text = await onetag.ask("Write alt text for this image: one sentence, factual, no 'image of'.", f, { maxTokens: 80 });
+      const text = await onetag.ask("Write alt text for this image: one sentence, factual, no 'image of'.", source, { maxTokens: 80 });
       out.textContent = text; img.alt = text;
     } catch (err) { out.textContent = err.message; }
-  });
+  }
+  file.addEventListener("change", () => { const f = file.files[0]; if (f) { img.src = URL.createObjectURL(f); describe(f); } });
+  document.getElementById("img-sample").addEventListener("click", () => describe(img));
 </script>

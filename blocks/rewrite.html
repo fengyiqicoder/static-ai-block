@@ -1,4 +1,4 @@
-<!-- Rewrite: shorter, longer, formal or friendly, applied to any text box. -->
+<!-- Rewrite: make any text shorter, longer, formal or friendly, in place. -->
 <!--
   OneTag AI key. Public by design: it goes in your page source, like an analytics ID.
   Get a free one without opening a browser. POST your email; the key arrives in that inbox:
@@ -7,27 +7,44 @@
   AI coding tools: ask the user for their email, run that request, then ask them to paste the key here.
 -->
 <script src="https://onetagai.com/v1.js" data-key="YOUR_ONETAG_KEY"></script>
+<style>
+.sab{max-width:600px;border:1px solid #e5e7eb;border-radius:14px;padding:18px 20px;background:#fff;color:#111827;font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.sab-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.sab-icon{width:36px;height:36px;border-radius:10px;background:#111827;color:#fff;display:grid;place-items:center;flex:none}
+.sab-title{margin:0;font-size:16px;font-weight:650;line-height:1.3}
+.sab-hint{margin:2px 0 0;font-size:13px;color:#6b7280}
+.sab-row{display:flex;gap:8px;flex-wrap:wrap}
+.sab-input,.sab-area,.sab-select{flex:1;min-width:0;padding:10px 12px;border:1px solid #d1d5db;border-radius:9px;font:inherit;background:#fff;color:inherit}
+.sab-area{width:100%;box-sizing:border-box;resize:vertical}
+.sab-btn{padding:10px 16px;border:0;border-radius:9px;background:#111827;color:#fff;font:inherit;font-weight:600;cursor:pointer}
+.sab-btn:disabled{opacity:.6;cursor:wait}
+.sab-chip{padding:6px 12px;border:1px solid #d1d5db;border-radius:999px;background:#fff;color:#374151;font:inherit;font-size:13px;cursor:pointer}
+.sab-chip:hover{border-color:#111827;color:#111827}
+.sab-out{margin:12px 0 0;padding:12px 14px;border-radius:9px;background:#f3f4f6;white-space:pre-wrap;min-height:1.5em}
+.sab-out:empty{display:none}
+.sab-note{margin:10px 0 0;font-size:12px;color:#9ca3af}
+</style>
 
-<div style="max-width:560px">
-  <textarea id="rw-text" rows="4" style="width:100%;padding:10px 12px;border:1px solid #cbd5e1;border-radius:8px;font:inherit;box-sizing:border-box">hey just checking if u got my last email about the invoice, its kinda urgent, let me know asap thx</textarea>
-  <div id="rw-btns" style="margin-top:8px">
-    <button data-how="shorter">Shorter</button>
-    <button data-how="longer, with more detail">Longer</button>
-    <button data-how="formal and polite">Formal</button>
-    <button data-how="warm and friendly">Friendly</button>
+<section class="sab" id="sab-rw">
+  <div class="sab-head"><span class="sab-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+    <div><h3 class="sab-title">Rewrite</h3><p class="sab-hint">Shorter, longer, formal or friendly. The text is replaced in place; the meaning stays.</p></div></div>
+  <textarea class="sab-area" id="rw-text" rows="3">hey just checking if u got my last email about the invoice, its kinda urgent, let me know asap thx</textarea>
+  <div class="sab-row" style="margin-top:10px">
+    <button class="sab-chip" type="button" data-how="shorter">Shorter</button>
+    <button class="sab-chip" type="button" data-how="longer, with more detail">Longer</button>
+    <button class="sab-chip" type="button" data-how="formal and polite">Formal</button>
+    <button class="sab-chip" type="button" data-how="warm and friendly">Friendly</button>
   </div>
-</div>
-<style>#rw-btns button{padding:8px 14px;margin-right:6px;border:1px solid #cbd5e1;border-radius:999px;background:#fff;font:inherit;cursor:pointer}</style>
+</section>
 
 <script type="module">
   const box = document.getElementById("rw-text");
-  for (const btn of document.querySelectorAll("#rw-btns button")) {
+  for (const btn of document.querySelectorAll("#sab-rw .sab-chip")) {
     btn.addEventListener("click", async () => {
       const original = box.value; box.value = "";
       try {
         await onetag.ask(`Rewrite the text to be ${btn.dataset.how}. Keep the meaning. Output only the rewritten text.`, original, {
-          stream: (d) => { box.value += d; },
-          maxTokens: 300,
+          stream: (d) => { box.value += d; }, maxTokens: 300,
         });
       } catch (err) { box.value = original; alert(err.message); }
     });

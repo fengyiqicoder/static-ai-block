@@ -5,14 +5,14 @@
 ## Blocks
 
 - [Ask this page](https://fengyiqicoder.github.io/static-ai-block/blocks/ask-this-page.html): A question box that answers from the page's own content, with follow-ups.
-- [Explain selection](https://fengyiqicoder.github.io/static-ai-block/blocks/explain-selection.html): Select any text on the page, a small "Explain" button appears next to it.
-- [Summarize this page](https://fengyiqicoder.github.io/static-ai-block/blocks/summarize-page.html): Three buttons, three lengths, answer streams in.
-- [Translate this page](https://fengyiqicoder.github.io/static-ai-block/blocks/translate-page.html): One button, the main content is rewritten in the visitor's browser language.
-- [FAQ bot](https://fengyiqicoder.github.io/static-ai-block/blocks/faq-bot.html): Answers only from the FAQ you wrote; says "I don't know" otherwise.
-- [Draft a reply](https://fengyiqicoder.github.io/static-ai-block/blocks/draft-reply.html): Paste a message, pick a tone, get a reply you can edit.
-- [Rewrite](https://fengyiqicoder.github.io/static-ai-block/blocks/rewrite.html): Shorter, longer, formal or friendly, applied to any text box.
+- [Explain selection](https://fengyiqicoder.github.io/static-ai-block/blocks/explain-selection.html): Select any text on the page and an "Explain" button appears next to it.
+- [Summarize this page](https://fengyiqicoder.github.io/static-ai-block/blocks/summarize-page.html): Three buttons, three lengths, the answer streams in.
+- [Translate this page](https://fengyiqicoder.github.io/static-ai-block/blocks/translate-page.html): Pick a language and the main content is rewritten in it; click again to restore.
+- [FAQ bot](https://fengyiqicoder.github.io/static-ai-block/blocks/faq-bot.html): Answers only from the FAQ you wrote; says "I don't know" for anything else.
+- [Draft a reply](https://fengyiqicoder.github.io/static-ai-block/blocks/draft-reply.html): Paste an email, review or ticket, pick a tone, get a reply you can edit.
+- [Rewrite](https://fengyiqicoder.github.io/static-ai-block/blocks/rewrite.html): Make any text shorter, longer, formal or friendly, in place.
 - [Extract to JSON](https://fengyiqicoder.github.io/static-ai-block/blocks/extract-json.html): Paste messy text, get structured fields back as an object.
-- [Smart search](https://fengyiqicoder.github.io/static-ai-block/blocks/smart-search.html): Describe what you want in plain words, the matching items on the page get highlighted.
-- [Describe an image](https://fengyiqicoder.github.io/static-ai-block/blocks/describe-image.html): Pick a photo, get alt text; works with any <img> on the page too.
-- [Explain code](https://fengyiqicoder.github.io/static-ai-block/blocks/code-explain.html): An "Explain" button on every code block on the page.
-- [Quiz from content](https://fengyiqicoder.github.io/static-ai-block/blocks/quiz.html): Turns the page (or any element) into three multiple-choice questions.
+- [Smart search](https://fengyiqicoder.github.io/static-ai-block/blocks/smart-search.html): Describe what you want in plain words and the matching items light up.
+- [Describe an image](https://fengyiqicoder.github.io/static-ai-block/blocks/describe-image.html): Alt text for any photo, from a file or any <img> on the page.
+- [Explain code](https://fengyiqicoder.github.io/static-ai-block/blocks/code-explain.html): An Explain button on every code block on the page.
+- [Quiz from this page](https://fengyiqicoder.github.io/static-ai-block/blocks/quiz.html): Three multiple-choice questions generated from the page content.

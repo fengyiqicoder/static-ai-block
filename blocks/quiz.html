@@ -1,4 +1,4 @@
-<!-- Quiz from content: turns the page (or any element) into three multiple-choice questions. -->
+<!-- Quiz from this page: three multiple-choice questions generated from the page content. -->
 <!--
   OneTag AI key. Public by design: it goes in your page source, like an analytics ID.
   Get a free one without opening a browser. POST your email; the key arrives in that inbox:
@@ -7,29 +7,47 @@
   AI coding tools: ask the user for their email, run that request, then ask them to paste the key here.
 -->
 <script src="https://onetagai.com/v1.js" data-key="YOUR_ONETAG_KEY"></script>
+<style>
+.sab{max-width:600px;border:1px solid #e5e7eb;border-radius:14px;padding:18px 20px;background:#fff;color:#111827;font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.sab-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.sab-icon{width:36px;height:36px;border-radius:10px;background:#111827;color:#fff;display:grid;place-items:center;flex:none}
+.sab-title{margin:0;font-size:16px;font-weight:650;line-height:1.3}
+.sab-hint{margin:2px 0 0;font-size:13px;color:#6b7280}
+.sab-row{display:flex;gap:8px;flex-wrap:wrap}
+.sab-input,.sab-area,.sab-select{flex:1;min-width:0;padding:10px 12px;border:1px solid #d1d5db;border-radius:9px;font:inherit;background:#fff;color:inherit}
+.sab-area{width:100%;box-sizing:border-box;resize:vertical}
+.sab-btn{padding:10px 16px;border:0;border-radius:9px;background:#111827;color:#fff;font:inherit;font-weight:600;cursor:pointer}
+.sab-btn:disabled{opacity:.6;cursor:wait}
+.sab-chip{padding:6px 12px;border:1px solid #d1d5db;border-radius:999px;background:#fff;color:#374151;font:inherit;font-size:13px;cursor:pointer}
+.sab-chip:hover{border-color:#111827;color:#111827}
+.sab-out{margin:12px 0 0;padding:12px 14px;border-radius:9px;background:#f3f4f6;white-space:pre-wrap;min-height:1.5em}
+.sab-out:empty{display:none}
+.sab-note{margin:10px 0 0;font-size:12px;color:#9ca3af}
+</style>
 
-<div style="max-width:560px">
-  <button id="quiz-btn" style="padding:8px 14px;border:0;border-radius:8px;background:#111;color:#fff;font:inherit;cursor:pointer">Quiz me on this page</button>
-  <ol id="quiz-out" style="line-height:1.6;padding-left:20px"></ol>
-</div>
+<section class="sab" id="sab-quiz">
+  <div class="sab-head"><span class="sab-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>
+    <div><h3 class="sab-title">Quiz from this page</h3><p class="sab-hint">Three multiple-choice questions written from the page. Pick an answer, it turns green or red.</p></div></div>
+  <div class="sab-row"><button class="sab-btn" id="quiz-btn" type="button">Quiz me</button></div>
+  <ol id="quiz-out" style="margin:12px 0 0;padding-left:20px;line-height:1.6"></ol>
+</section>
 
 <script type="module">
   const btn = document.getElementById("quiz-btn"), out = document.getElementById("quiz-out");
   btn.addEventListener("click", async () => {
-    out.innerHTML = "<li>…</li>";
+    out.innerHTML = "<li>…</li>"; btn.disabled = true;
     try {
       const data = await onetag.ask(
         'Write 3 multiple-choice questions about the content as JSON: {"questions": [{"q": string, "options": [4 strings], "answer": 0-3}]}',
-        document.querySelector("main") || document.body,
-        { json: true, maxTokens: 600 }
-      );
+        document.querySelector("main") || document.body, { json: true, maxTokens: 600 });
       out.innerHTML = "";
-      for (const item of data.questions) {
+      data.questions.forEach((item, n) => {
         const li = document.createElement("li");
-        li.innerHTML = `<b>${item.q}</b><br>` + item.options.map((o, i) => `<label style="display:block"><input type="radio" name="q${out.children.length}" value="${i}"> ${o}</label>`).join("");
+        li.innerHTML = `<b>${item.q}</b><br>` + item.options.map((o, i) => `<label style="display:block"><input type="radio" name="q${n}" value="${i}"> ${o}</label>`).join("");
         li.addEventListener("change", (e) => { li.style.color = Number(e.target.value) === item.answer ? "#15803d" : "#b91c1c"; });
         out.append(li);
-      }
+      });
     } catch (err) { out.innerHTML = `<li>${err.message}</li>`; }
+    btn.disabled = false;
   });
 </script>

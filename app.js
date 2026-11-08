@@ -1,79 +1,60 @@
 (() => {
   "use strict";
-  const thumbs = document.getElementById("thumbs");
-  const title = document.getElementById("b-title"), desc = document.getElementById("b-desc"), note = document.getElementById("note");
-  const frame = document.getElementById("preview"), frameWrap = document.querySelector(".frame-wrap"), code = document.getElementById("code"), codeText = document.getElementById("code-text");
-  const toggleCode = document.getElementById("toggle-code"), toggleDark = document.getElementById("toggle-dark");
-  const copyBtn = document.getElementById("copy"), openLink = document.getElementById("open");
+  const grid = document.getElementById("blocks");
   const previewKey = window.AI_BLOCKS_PREVIEW_KEY || "YOUR_ONETAG_KEY";
-  let blocks = [], current = null, source = "", dark = false;
 
-  const SAMPLE = `<main><h2>Sample page</h2><p>This preview is a small page about sourdough. A starter is flour and water left to ferment; it leavens bread with wild yeast and bacteria instead of commercial yeast. Feed it daily at room temperature or weekly in the fridge. A loaf needs about 20% starter, a long cold proof of 12 to 18 hours, and a very hot oven, 250 °C, with steam for the first 20 minutes.</p>`;
+  const SAMPLE = `<main style="margin-bottom:16px"><p style="margin:0 0 12px;font-size:13px;color:#6b7280">Sample page the block reads: a note on sourdough. A starter is flour and water left to ferment; it leavens bread with wild yeast. Feed it daily at room temperature or weekly in the fridge. A loaf needs about 20% starter, a 12 to 18 hour cold proof and a 250 °C oven with steam for the first 20 minutes.</p>`;
 
-  // The preview is the block inside a plain sample page, with the demo key swapped in.
-  const shell = (html, isDark) => `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<style>body{margin:0;padding:24px;font:16px/1.5 "IBM Plex Sans",system-ui,sans-serif;color:${isDark ? "#e8eef7" : "#111"};background:${isDark ? "#111827" : "#fff"}}main h2{margin-top:0}${isDark ? "input,textarea,select{background:#1f2937;color:#e8eef7;border-color:#374151!important}pre{background:#1f2937!important}" : ""}</style></head>
+  // Each card is the block itself, running live inside a plain page with the demo key swapped in.
+  const shell = (html) => `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>body{margin:0;padding:14px;background:#f5f7fb;font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#0b1020}</style></head>
 <body>${SAMPLE}${html.replace(/YOUR_ONETAG_KEY/g, previewKey)}</main></body></html>`;
 
-  // Thumbnails are the block's own markup, scripts stripped, scaled down. No API calls.
-  const thumb = (html, b) => `<!doctype html><html><head><meta charset="utf-8"><style>body{margin:0;padding:16px;width:560px;font:16px/1.5 "IBM Plex Sans",system-ui,sans-serif;color:#111;background:#fff;overflow:hidden}.cap{margin:10px 0 0;color:#94a3b8;font-size:15px}</style></head><body>${html.replace(/<script[\s\S]*?<\/script>/g, "").replace(/<!--[\s\S]*?-->/g, "")}<p class="cap">${b.description}</p></body></html>`;
+  const toAI = (b, source) => `Add this AI block to my site. It uses OneTag AI; docs for the API are at https://onetagai.com/llms.txt
 
-  async function renderThumbs() {
-    const groups = [...new Set(blocks.map((b) => b.group))];
-    for (const g of groups) {
-      const h = document.createElement("h2"); h.textContent = g; thumbs.append(h);
-      for (const b of blocks.filter((x) => x.group === g)) {
-        const a = document.createElement("a");
-        a.href = "#" + b.id; a.dataset.id = b.id; a.className = "thumb"; a.title = b.title;
-        a.innerHTML = `<span class="thumb-frame"><iframe loading="lazy" tabindex="-1" aria-hidden="true" sandbox=""></iframe></span><span class="thumb-label">${b.title}</span>`;
-        thumbs.append(a);
-        fetch(b.file).then((r) => r.text()).then((src) => { b.source = src; a.querySelector("iframe").srcdoc = thumb(src, b); });
-      }
-    }
-  }
+1. Insert the block below into the page where it fits. Keep its markup and script as they are; adapt colors or fonts only if my site has a design system.
+2. If I do not have a OneTag AI key yet: ask me for my email, then run
+   curl -X POST https://onetagai.com/api/signup -H "Content-Type: application/json" -d '{"email":"MY_EMAIL"}'
+   The key arrives in my inbox (one key per email). Ask me to paste it, then replace YOUR_ONETAG_KEY in the block with it.
+3. Open the page and try the block once. The free allowance is 1,000,000 tokens per account.
 
-  async function show(id) {
-    const b = blocks.find((x) => x.id === id) || blocks[0];
-    if (!b) return;
-    current = b;
-    for (const a of thumbs.querySelectorAll("a")) a.classList.toggle("on", a.dataset.id === b.id);
-    thumbs.querySelector(`a[data-id="${b.id}"]`)?.scrollIntoView({ block: "nearest" });
-    title.textContent = b.title; desc.textContent = b.description;
-    note.textContent = `${b.lines} lines · plain HTML + JS · paste anywhere`;
-    source = b.source || await (await fetch(b.file)).text();
-    b.source = source;
-    codeText.textContent = source;
-    frame.srcdoc = shell(source, dark);
-    openLink.href = `preview.html#${b.id}`;
-    document.getElementById("page").href = b.page;
-  }
+--- Block: ${b.title} (${b.description}) ---
+${source}`;
 
-  toggleCode.addEventListener("click", () => {
-    const show = code.hidden;
-    code.hidden = !show; frameWrap.hidden = show;
-    toggleCode.setAttribute("aria-pressed", String(show));
-  });
-  for (const btn of document.querySelectorAll(".seg [data-width]")) {
-    btn.addEventListener("click", () => {
-      for (const o of document.querySelectorAll(".seg [data-width]")) o.setAttribute("aria-pressed", String(o === btn));
-      frame.style.width = btn.dataset.width;
+  function card(b) {
+    const el = document.createElement("article");
+    el.className = "card"; el.id = b.id;
+    el.innerHTML = `
+      <div class="card-live"><iframe loading="lazy" title="${b.title} (live)" sandbox="allow-scripts allow-same-origin allow-forms allow-modals"></iframe></div>
+      <pre class="card-code" hidden><code></code></pre>
+      <div class="card-bar">
+        <span class="card-meta">${b.lines} lines · HTML + JS</span>
+        <span class="card-actions">
+          <button type="button" class="ghost" data-code aria-pressed="false">Code</button>
+          <button type="button" class="ghost" data-copy>Copy block</button>
+          <button type="button" class="button small" data-ai>Copy to AI</button>
+          <a class="ghost" href="${b.page}">Page</a>
+        </span>
+      </div>`;
+    const frame = el.querySelector("iframe"), code = el.querySelector(".card-code"), live = el.querySelector(".card-live");
+    const codeBtn = el.querySelector("[data-code]"), copyBtn = el.querySelector("[data-copy]"), aiBtn = el.querySelector("[data-ai]");
+    let source = "";
+    fetch(b.file).then((r) => r.text()).then((src) => { source = src; frame.srcdoc = shell(src); code.querySelector("code").textContent = src; });
+    codeBtn.addEventListener("click", () => {
+      const show = code.hidden; code.hidden = !show; live.hidden = show; codeBtn.setAttribute("aria-pressed", String(show));
     });
+    const flash = (btn, text) => { const t = btn.textContent; btn.textContent = text; setTimeout(() => { btn.textContent = t; }, 1500); };
+    copyBtn.addEventListener("click", async () => { try { await navigator.clipboard.writeText(source); flash(copyBtn, "Copied"); } catch { code.hidden = false; live.hidden = true; } });
+    aiBtn.addEventListener("click", async () => { try { await navigator.clipboard.writeText(toAI(b, source)); flash(aiBtn, "Copied for your agent"); } catch { code.hidden = false; live.hidden = true; } });
+    return el;
   }
-  toggleDark.addEventListener("click", () => {
-    dark = !dark; toggleDark.setAttribute("aria-pressed", String(dark));
-    if (current) frame.srcdoc = shell(source, dark);
+
+  fetch("blocks.json").then((r) => r.json()).then((data) => {
+    for (const b of data.blocks) grid.append(card(b));
   });
-  copyBtn.addEventListener("click", async () => {
-    try { await navigator.clipboard.writeText(source); copyBtn.textContent = "Copied"; setTimeout(() => { copyBtn.textContent = "Copy block"; }, 1500); }
-    catch { code.hidden = false; frameWrap.hidden = true; toggleCode.setAttribute("aria-pressed", "true"); }
-  });
-  window.addEventListener("hashchange", () => show(location.hash.slice(1)));
-  // Live star count in the banner (public repos only; fails silently otherwise).
+
+  // Live star count (public repos only; fails silently otherwise).
   fetch("https://api.github.com/repos/fengyiqicoder/static-ai-block").then((r) => r.ok ? r.json() : null).then((d) => {
     if (d && typeof d.stargazers_count === "number") document.getElementById("star-count").textContent = `★ ${d.stargazers_count.toLocaleString()}`;
   }).catch(() => {});
-
-  fetch("blocks.json").then((r) => r.json()).then(async (data) => {
-    blocks = data.blocks; await renderThumbs(); show(location.hash.slice(1) || blocks[0].id);
-  });
 })();

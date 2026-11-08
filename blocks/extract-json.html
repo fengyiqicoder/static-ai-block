@@ -7,12 +7,31 @@
   AI coding tools: ask the user for their email, run that request, then ask them to paste the key here.
 -->
 <script src="https://onetagai.com/v1.js" data-key="YOUR_ONETAG_KEY"></script>
+<style>
+.sab{max-width:600px;border:1px solid #e5e7eb;border-radius:14px;padding:18px 20px;background:#fff;color:#111827;font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.sab-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.sab-icon{width:36px;height:36px;border-radius:10px;background:#111827;color:#fff;display:grid;place-items:center;flex:none}
+.sab-title{margin:0;font-size:16px;font-weight:650;line-height:1.3}
+.sab-hint{margin:2px 0 0;font-size:13px;color:#6b7280}
+.sab-row{display:flex;gap:8px;flex-wrap:wrap}
+.sab-input,.sab-area,.sab-select{flex:1;min-width:0;padding:10px 12px;border:1px solid #d1d5db;border-radius:9px;font:inherit;background:#fff;color:inherit}
+.sab-area{width:100%;box-sizing:border-box;resize:vertical}
+.sab-btn{padding:10px 16px;border:0;border-radius:9px;background:#111827;color:#fff;font:inherit;font-weight:600;cursor:pointer}
+.sab-btn:disabled{opacity:.6;cursor:wait}
+.sab-chip{padding:6px 12px;border:1px solid #d1d5db;border-radius:999px;background:#fff;color:#374151;font:inherit;font-size:13px;cursor:pointer}
+.sab-chip:hover{border-color:#111827;color:#111827}
+.sab-out{margin:12px 0 0;padding:12px 14px;border-radius:9px;background:#f3f4f6;white-space:pre-wrap;min-height:1.5em}
+.sab-out:empty{display:none}
+.sab-note{margin:10px 0 0;font-size:12px;color:#9ca3af}
+</style>
 
-<div style="max-width:560px">
-  <textarea id="ext-in" rows="5" style="width:100%;padding:10px 12px;border:1px solid #cbd5e1;border-radius:8px;font:inherit;box-sizing:border-box">Hi, this is Dana Whitfield from Larkspur Studio. We'd like 40 units of the oak desk organizer delivered to 12 Rue Cler, Paris by March 14. Budget is around 1,900 EUR. Reach me at dana@larkspur.example.</textarea>
-  <button id="ext-btn" style="margin-top:8px;padding:8px 14px;border:0;border-radius:8px;background:#111;color:#fff;font:inherit;cursor:pointer">Extract</button>
-  <pre id="ext-out" style="margin:12px 0 0;padding:12px;background:#f1f5f9;border-radius:8px;white-space:pre-wrap;font-size:13px"></pre>
-</div>
+<section class="sab" id="sab-extract">
+  <div class="sab-head"><span class="sab-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4H6a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2 2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h2M16 4h2a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2 2 2 0 0 0-2 2v4a2 2 0 0 1-2 2h-2"/></svg></span>
+    <div><h3 class="sab-title">Extract to JSON</h3><p class="sab-hint">Messy text in, structured fields out: name, company, email, quantity, deadline, budget.</p></div></div>
+  <textarea class="sab-area" id="ext-in" rows="4">Hi, this is Dana Whitfield from Larkspur Studio. We'd like 40 units of the oak desk organizer delivered to 12 Rue Cler, Paris by March 14. Budget is around 1,900 EUR. Reach me at dana@larkspur.example.</textarea>
+  <div class="sab-row" style="margin-top:10px"><button class="sab-btn" id="ext-btn" type="button">Extract fields</button></div>
+  <pre class="sab-out" id="ext-out" style="font:13px/1.5 ui-monospace,Menlo,monospace"></pre>
+</section>
 
 <script type="module">
   const btn = document.getElementById("ext-btn"), src = document.getElementById("ext-in"), out = document.getElementById("ext-out");
@@ -21,9 +40,7 @@
     try {
       const data = await onetag.ask(
         'Extract {"name": string, "company": string, "email": string, "quantity": number, "product": string, "deadline": "YYYY-MM-DD", "budget_eur": number}. Use null for missing fields.',
-        src.value,
-        { json: true }                       // json: true returns a parsed object
-      );
+        src.value, { json: true });                      // json: true returns a parsed object
       out.textContent = JSON.stringify(data, null, 2);
     } catch (err) { out.textContent = err.message; }
   });

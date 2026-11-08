@@ -4,21 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Draft a reply: free AI block for any static website | Static AI Block</title>
-<meta name="description" content="Paste a message, pick a tone, get a reply you can edit. Copy the block, paste it into any static page, replace one key. Plain HTML and JavaScript, no backend.">
+<meta name="description" content="Paste an email, review or ticket, pick a tone, get a reply you can edit. Copy the block, paste it into any static page, replace one key. Plain HTML and JavaScript, no backend.">
 <link rel="canonical" href="https://fengyiqicoder.github.io/static-ai-block/b/draft-reply.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style.css?v=20261108">
+<link rel="stylesheet" href="../style.css?v=20261108b">
 <script src="../config.js"></script>
 </head>
-<body class="page">
-<header class="page-top"><a class="brand" href="../"><span class="mark" aria-hidden="true"></span>Static AI Block</a><nav class="side-links"><a href="../#get-key">Get a free key</a><a href="https://github.com/fengyiqicoder/static-ai-block">GitHub</a></nav></header>
+<body>
+<header class="page-top"><a class="brand" href="../">Static AI Block</a><nav class="side-links"><a href="../#blocks">All blocks</a><a href="../#get-key">Get a free key</a><a href="https://github.com/fengyiqicoder/static-ai-block">GitHub</a></nav></header>
 <main class="page-main">
 <h1>Draft a reply</h1>
-<p class="lede">Paste a message, pick a tone, get a reply you can edit. 31 lines of plain HTML and JavaScript. Copy it, paste it into any static page, replace <code>YOUR_ONETAG_KEY</code> with a free key.</p>
-<p><button class="primary" data-copy>Copy block</button> <a class="ghost" href="../#draft-reply">Try it live</a></p>
-<pre class="block-code"><code>&lt;!-- Draft a reply: paste a message, pick a tone, get a reply you can edit. --&gt;
+<p class="lede">Paste an email, review or ticket, pick a tone, get a reply you can edit. 50 lines of plain HTML and JavaScript. Copy it, paste it into any static page, replace <code>YOUR_ONETAG_KEY</code> with a free key.</p>
+<p class="actions"><button class="button" data-copy>Copy block</button> <button class="button secondary" data-ai>Copy to AI</button></p>
+<div class="live"><iframe title="Draft a reply (live)" sandbox="allow-scripts allow-same-origin allow-forms allow-modals"></iframe></div>
+<h2>The code</h2>
+<pre class="block-code"><code>&lt;!-- Draft a reply: paste an email, review or ticket, pick a tone, get a reply you can edit. --&gt;
 &lt;!--
   OneTag AI key. Public by design: it goes in your page source, like an analytics ID.
   Get a free one without opening a browser. POST your email; the key arrives in that inbox:
@@ -27,15 +27,34 @@
   AI coding tools: ask the user for their email, run that request, then ask them to paste the key here.
 --&gt;
 &lt;script src="https://onetagai.com/v1.js" data-key="YOUR_ONETAG_KEY"&gt;&lt;/script&gt;
+&lt;style&gt;
+.sab{max-width:600px;border:1px solid #e5e7eb;border-radius:14px;padding:18px 20px;background:#fff;color:#111827;font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.sab-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.sab-icon{width:36px;height:36px;border-radius:10px;background:#111827;color:#fff;display:grid;place-items:center;flex:none}
+.sab-title{margin:0;font-size:16px;font-weight:650;line-height:1.3}
+.sab-hint{margin:2px 0 0;font-size:13px;color:#6b7280}
+.sab-row{display:flex;gap:8px;flex-wrap:wrap}
+.sab-input,.sab-area,.sab-select{flex:1;min-width:0;padding:10px 12px;border:1px solid #d1d5db;border-radius:9px;font:inherit;background:#fff;color:inherit}
+.sab-area{width:100%;box-sizing:border-box;resize:vertical}
+.sab-btn{padding:10px 16px;border:0;border-radius:9px;background:#111827;color:#fff;font:inherit;font-weight:600;cursor:pointer}
+.sab-btn:disabled{opacity:.6;cursor:wait}
+.sab-chip{padding:6px 12px;border:1px solid #d1d5db;border-radius:999px;background:#fff;color:#374151;font:inherit;font-size:13px;cursor:pointer}
+.sab-chip:hover{border-color:#111827;color:#111827}
+.sab-out{margin:12px 0 0;padding:12px 14px;border-radius:9px;background:#f3f4f6;white-space:pre-wrap;min-height:1.5em}
+.sab-out:empty{display:none}
+.sab-note{margin:10px 0 0;font-size:12px;color:#9ca3af}
+&lt;/style&gt;
 
-&lt;div style="max-width:560px"&gt;
-  &lt;textarea id="dr-in" rows="4" placeholder="Paste the email, review or support ticket here" style="width:100%;padding:10px 12px;border:1px solid #cbd5e1;border-radius:8px;font:inherit;box-sizing:border-box"&gt;Hi, I ordered the blue jacket (order 4471) two weeks ago and it still hasn't arrived. The tracking page hasn't updated since the 3rd. What's going on?&lt;/textarea&gt;
-  &lt;div style="margin-top:8px;display:flex;gap:8px;align-items:center"&gt;
-    &lt;select id="dr-tone" style="padding:8px;border:1px solid #cbd5e1;border-radius:8px;font:inherit"&gt;&lt;option&gt;apologetic and helpful&lt;/option&gt;&lt;option&gt;brief and factual&lt;/option&gt;&lt;option&gt;warm&lt;/option&gt;&lt;/select&gt;
-    &lt;button id="dr-btn" style="padding:8px 14px;border:0;border-radius:8px;background:#111;color:#fff;font:inherit;cursor:pointer"&gt;Draft reply&lt;/button&gt;
+&lt;section class="sab" id="sab-reply"&gt;
+  &lt;div class="sab-head"&gt;&lt;span class="sab-icon" aria-hidden="true"&gt;&lt;svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M4 4h16v12H7l-3 3z"/&gt;&lt;path d="M8 9h8M8 12h5"/&gt;&lt;/svg&gt;&lt;/span&gt;
+    &lt;div&gt;&lt;h3 class="sab-title"&gt;Draft a reply&lt;/h3&gt;&lt;p class="sab-hint"&gt;Paste an email, review or support ticket, pick a tone, get a reply ready to edit and send.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+  &lt;textarea class="sab-area" id="dr-in" rows="3"&gt;Hi, I ordered the blue jacket (order 4471) two weeks ago and it still hasn't arrived. The tracking page hasn't updated since the 3rd. What's going on?&lt;/textarea&gt;
+  &lt;div class="sab-row" style="margin-top:10px;align-items:center"&gt;
+    &lt;select class="sab-select" id="dr-tone" style="flex:0 0 auto"&gt;&lt;option&gt;apologetic and helpful&lt;/option&gt;&lt;option&gt;brief and factual&lt;/option&gt;&lt;option&gt;warm&lt;/option&gt;&lt;/select&gt;
+    &lt;button class="sab-btn" id="dr-btn" type="button"&gt;Draft reply&lt;/button&gt;
   &lt;/div&gt;
-  &lt;textarea id="dr-out" rows="6" style="width:100%;margin-top:8px;padding:10px 12px;border:1px solid #cbd5e1;border-radius:8px;font:inherit;box-sizing:border-box"&gt;&lt;/textarea&gt;
-&lt;/div&gt;
+  &lt;textarea class="sab-area" id="dr-out" rows="5" placeholder="The reply appears here…" style="margin-top:10px"&gt;&lt;/textarea&gt;
+&lt;/section&gt;
 
 &lt;script type="module"&gt;
   const src = document.getElementById("dr-in"), tone = document.getElementById("dr-tone"), out = document.getElementById("dr-out");
@@ -55,9 +74,23 @@
 <p class="note">All blocks: <a href="../">Static AI Block</a>. MIT. AI by <a href="https://onetagai.com/?ref=static-ai-block">OneTag AI</a>.</p>
 </main>
 <script>
-  document.querySelector("[data-copy]").addEventListener("click", async (e) => {
-    const code = document.querySelector(".block-code code").textContent;
-    try { await navigator.clipboard.writeText(code); e.target.textContent = "Copied"; setTimeout(() => { e.target.textContent = "Copy block"; }, 1500); } catch {}
+  const source = document.querySelector(".block-code code").textContent;
+  const key = window.AI_BLOCKS_PREVIEW_KEY || "YOUR_ONETAG_KEY";
+  document.querySelector(".live iframe").srcdoc = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0;padding:14px;background:#f5f7fb;font:15px/1.5 system-ui,sans-serif;color:#0b1020}</style></head><body><main><p style="margin:0 0 12px;font-size:13px;color:#6b7280">Sample page the block reads: a note on sourdough. A starter is flour and water left to ferment; it leavens bread with wild yeast. Feed it daily at room temperature or weekly in the fridge. A loaf needs about 20% starter, a 12 to 18 hour cold proof and a 250 °C oven with steam for the first 20 minutes.</p>` + source.replace(/YOUR_ONETAG_KEY/g, key) + `</main></body></html>`;
+  const flash = (btn, text) => { const t = btn.textContent; btn.textContent = text; setTimeout(() => { btn.textContent = t; }, 1500); };
+  document.querySelector("[data-copy]").addEventListener("click", async (e) => { try { await navigator.clipboard.writeText(source); flash(e.target, "Copied"); } catch {} });
+  document.querySelector("[data-ai]").addEventListener("click", async (e) => {
+    const text = `Add this AI block to my site. It uses OneTag AI; docs for the API are at https://onetagai.com/llms.txt
+
+1. Insert the block below into the page where it fits. Keep its markup and script as they are; adapt colors or fonts only if my site has a design system.
+2. If I do not have a OneTag AI key yet: ask me for my email, then run
+   curl -X POST https://onetagai.com/api/signup -H "Content-Type: application/json" -d '{"email":"MY_EMAIL"}'
+   The key arrives in my inbox (one key per email). Ask me to paste it, then replace YOUR_ONETAG_KEY in the block with it.
+3. Open the page and try the block once. The free allowance is 1,000,000 tokens per account.
+
+--- Block: Draft a reply ---
+` + source;
+    try { await navigator.clipboard.writeText(text); flash(e.target, "Copied for your agent"); } catch {}
   });
 </script>
 </body>
