@@ -19,7 +19,10 @@ const blocks = readdirSync("blocks").filter((f) => f.endsWith(".html")).map((fil
 	const description = m ? m[2].trim().replace(/^./, (c) => c.toUpperCase()) : "";
 	return { id, file: `blocks/${file}`, page: `b/${id}.html`, title: m ? m[1].trim() : id, description, group: groups[id] || "Other", lines: source.split("\n").length, source };
 });
-blocks.sort((a, b) => order.indexOf(a.group) - order.indexOf(b.group) || a.title.localeCompare(b.title));
+// Most-used first, per the 2026-11-03 survey of how AI is used on web pages (summarize, ask, chat, rewrite,
+// translate, generate, extract) plus AI site search (the feature visitors meet most often).
+const USAGE_ORDER = ["summarize-page", "ask-this-page", "faq-bot", "rewrite", "translate-page", "draft-reply", "extract-json", "smart-search", "explain-selection", "describe-image", "quiz", "code-explain"];
+blocks.sort((a, b) => USAGE_ORDER.indexOf(a.id) - USAGE_ORDER.indexOf(b.id));
 
 writeFileSync("blocks.json", JSON.stringify({ generated: new Date().toISOString().slice(0, 10), blocks: blocks.map(({ source, ...b }) => b) }, null, 2) + "\n");
 

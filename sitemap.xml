@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url><loc>https://fengyiqicoder.github.io/static-ai-block/</loc></url>
-<url><loc>https://fengyiqicoder.github.io/static-ai-block/b/ask-this-page.html</loc></url>
-<url><loc>https://fengyiqicoder.github.io/static-ai-block/b/explain-selection.html</loc></url>
 <url><loc>https://fengyiqicoder.github.io/static-ai-block/b/summarize-page.html</loc></url>
-<url><loc>https://fengyiqicoder.github.io/static-ai-block/b/translate-page.html</loc></url>
+<url><loc>https://fengyiqicoder.github.io/static-ai-block/b/ask-this-page.html</loc></url>
 <url><loc>https://fengyiqicoder.github.io/static-ai-block/b/faq-bot.html</loc></url>
-<url><loc>https://fengyiqicoder.github.io/static-ai-block/b/draft-reply.html</loc></url>
 <url><loc>https://fengyiqicoder.github.io/static-ai-block/b/rewrite.html</loc></url>
+<url><loc>https://fengyiqicoder.github.io/static-ai-block/b/translate-page.html</loc></url>
+<url><loc>https://fengyiqicoder.github.io/static-ai-block/b/draft-reply.html</loc></url>
 <url><loc>https://fengyiqicoder.github.io/static-ai-block/b/extract-json.html</loc></url>
 <url><loc>https://fengyiqicoder.github.io/static-ai-block/b/smart-search.html</loc></url>
+<url><loc>https://fengyiqicoder.github.io/static-ai-block/b/explain-selection.html</loc></url>
 <url><loc>https://fengyiqicoder.github.io/static-ai-block/b/describe-image.html</loc></url>
-<url><loc>https://fengyiqicoder.github.io/static-ai-block/b/code-explain.html</loc></url>
 <url><loc>https://fengyiqicoder.github.io/static-ai-block/b/quiz.html</loc></url>
+<url><loc>https://fengyiqicoder.github.io/static-ai-block/b/code-explain.html</loc></url>
 </urlset>

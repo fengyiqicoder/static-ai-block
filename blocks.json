@@ -2,6 +2,15 @@
   "generated": "2026-11-08",
   "blocks": [
     {
+      "id": "summarize-page",
+      "file": "blocks/summarize-page.html",
+      "page": "b/summarize-page.html",
+      "title": "Summarize this page",
+      "description": "Summarize this page in one click.",
+      "group": "Read",
+      "lines": 54
+    },
+    {
       "id": "ask-this-page",
       "file": "blocks/ask-this-page.html",
       "page": "b/ask-this-page.html",
@@ -11,21 +20,21 @@
       "lines": 59
     },
     {
-      "id": "explain-selection",
-      "file": "blocks/explain-selection.html",
-      "page": "b/explain-selection.html",
-      "title": "Explain any selection",
-      "description": "Select any text on the page to get it explained.",
-      "group": "Read",
-      "lines": 61
+      "id": "faq-bot",
+      "file": "blocks/faq-bot.html",
+      "page": "b/faq-bot.html",
+      "title": "FAQ bot",
+      "description": "Answers only from your FAQ, says \"I don't know\" otherwise.",
+      "group": "Chat",
+      "lines": 60
     },
     {
-      "id": "summarize-page",
-      "file": "blocks/summarize-page.html",
-      "page": "b/summarize-page.html",
-      "title": "Summarize this page",
-      "description": "Summarize this page in one click.",
-      "group": "Read",
+      "id": "rewrite",
+      "file": "blocks/rewrite.html",
+      "page": "b/rewrite.html",
+      "title": "Rewrite",
+      "description": "Make any text shorter, longer, formal or friendly.",
+      "group": "Write",
       "lines": 54
     },
     {
@@ -38,15 +47,6 @@
       "lines": 61
     },
     {
-      "id": "faq-bot",
-      "file": "blocks/faq-bot.html",
-      "page": "b/faq-bot.html",
-      "title": "FAQ bot",
-      "description": "Answers only from your FAQ, says \"I don't know\" otherwise.",
-      "group": "Chat",
-      "lines": 60
-    },
-    {
       "id": "draft-reply",
       "file": "blocks/draft-reply.html",
       "page": "b/draft-reply.html",
@@ -54,15 +54,6 @@
       "description": "Paste a message, get a reply in the tone you pick.",
       "group": "Write",
       "lines": 51
-    },
-    {
-      "id": "rewrite",
-      "file": "blocks/rewrite.html",
-      "page": "b/rewrite.html",
-      "title": "Rewrite",
-      "description": "Make any text shorter, longer, formal or friendly.",
-      "group": "Write",
-      "lines": 54
     },
     {
       "id": "extract-json",
@@ -83,6 +74,15 @@
       "lines": 60
     },
     {
+      "id": "explain-selection",
+      "file": "blocks/explain-selection.html",
+      "page": "b/explain-selection.html",
+      "title": "Explain any selection",
+      "description": "Select any text on the page to get it explained.",
+      "group": "Read",
+      "lines": 61
+    },
+    {
       "id": "describe-image",
       "file": "blocks/describe-image.html",
       "page": "b/describe-image.html",
@@ -92,15 +92,6 @@
       "lines": 53
     },
     {
-      "id": "code-explain",
-      "file": "blocks/code-explain.html",
-      "page": "b/code-explain.html",
-      "title": "Explain code",
-      "description": "Adds an Explain button to every code block.",
-      "group": "Learn",
-      "lines": 52
-    },
-    {
       "id": "quiz",
       "file": "blocks/quiz.html",
       "page": "b/quiz.html",
@@ -108,6 +99,15 @@
       "description": "Turn this page into a three-question quiz.",
       "group": "Learn",
       "lines": 55
+    },
+    {
+      "id": "code-explain",
+      "file": "blocks/code-explain.html",
+      "page": "b/code-explain.html",
+      "title": "Explain code",
+      "description": "Adds an Explain button to every code block.",
+      "group": "Learn",
+      "lines": 52
     }
   ]
 }
