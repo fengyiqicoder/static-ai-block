@@ -19,6 +19,7 @@ ${html.replace(/YOUR_ONETAG_KEY/g, previewKey)}</main></body></html>`;
     side.innerHTML = groups.map((g) => `<h2>${g}</h2><ul>${blocks.filter((b) => b.group === g).map((b) => `<li><a href="#${b.id}" data-id="${b.id}">${b.title}</a></li>`).join("")}</ul>`).join("");
     const mobile = document.createElement("select");
     mobile.className = "mobile-select";
+    mobile.setAttribute("aria-label", "Choose a block");
     mobile.innerHTML = blocks.map((b) => `<option value="${b.id}">${b.group}: ${b.title}</option>`).join("");
     mobile.addEventListener("change", () => { location.hash = mobile.value; });
     side.prepend(mobile);
