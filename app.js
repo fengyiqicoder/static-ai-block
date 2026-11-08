@@ -6,9 +6,10 @@
   const SAMPLE = `<main style="margin-bottom:16px"><p style="margin:0 0 12px;font-size:13px;color:#6b7280">Sample page the block reads: a note on sourdough. A starter is flour and water left to ferment; it leavens bread with wild yeast. Feed it daily at room temperature or weekly in the fridge. A loaf needs about 20% starter, a 12 to 18 hour cold proof and a 250 °C oven with steam for the first 20 minutes.</p>`;
 
   // Each card is the block itself, running live inside a plain page with the demo key swapped in.
-  const shell = (html) => `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  const READS_PAGE = new Set(["ask-this-page","summarize-page","explain-selection","translate-page","quiz","code-explain"]);
+  const shell = (html, b) => `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <style>body{margin:0;padding:14px;background:#f5f7fb;font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#0b1020}</style></head>
-<body>${SAMPLE}${html.replace(/YOUR_ONETAG_KEY/g, previewKey)}</main></body></html>`;
+<body>${READS_PAGE.has(b.id) ? SAMPLE : "<main>"}${html.replace(/YOUR_ONETAG_KEY/g, previewKey)}</main></body></html>`;
 
   const toAI = (b, source) => `Add this AI block to my site. It uses OneTag AI; docs for the API are at https://onetagai.com/llms.txt
 
@@ -39,7 +40,7 @@ ${source}`;
     const frame = el.querySelector("iframe"), code = el.querySelector(".card-code"), live = el.querySelector(".card-live");
     const codeBtn = el.querySelector("[data-code]"), copyBtn = el.querySelector("[data-copy]"), aiBtn = el.querySelector("[data-ai]");
     let source = "";
-    fetch(b.file).then((r) => r.text()).then((src) => { source = src; frame.srcdoc = shell(src); code.querySelector("code").textContent = src; });
+    fetch(b.file).then((r) => r.text()).then((src) => { source = src; frame.srcdoc = shell(src, b); code.querySelector("code").textContent = src; });
     codeBtn.addEventListener("click", () => {
       const show = code.hidden; code.hidden = !show; live.hidden = show; codeBtn.setAttribute("aria-pressed", String(show));
     });

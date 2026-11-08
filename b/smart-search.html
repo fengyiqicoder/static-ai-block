@@ -14,7 +14,7 @@
 <header class="page-top"><a class="brand" href="../">Static AI Block</a><nav class="side-links"><a href="../#blocks">All blocks</a><a href="../#get-key">Get a free key</a><a href="https://github.com/fengyiqicoder/static-ai-block">GitHub</a></nav></header>
 <main class="page-main">
 <h1>Smart search</h1>
-<p class="lede">Describe what you want in plain words and the matching items light up. 59 lines of plain HTML and JavaScript. Copy it, paste it into any static page, replace <code>YOUR_ONETAG_KEY</code> with a free key.</p>
+<p class="lede">Describe what you want in plain words and the matching items light up. 60 lines of plain HTML and JavaScript. Copy it, paste it into any static page, replace <code>YOUR_ONETAG_KEY</code> with a free key.</p>
 <p class="actions"><button class="button" data-copy>Copy block</button> <button class="button secondary" data-ai>Copy to AI</button></p>
 <div class="live"><iframe title="Smart search (live)" sandbox="allow-scripts allow-same-origin allow-forms allow-modals"></iframe></div>
 <h2>The code</h2>
@@ -76,6 +76,7 @@
     }, 500);                                                   // wait for typing to pause
   });
 &lt;/script&gt;
+&lt;!-- Static AI Block · free AI blocks for static sites · https://github.com/fengyiqicoder/static-ai-block --&gt;
 </code></pre>
 <h2>Get a free key</h2>
 <p>Fill in your email at <a href="https://onetagai.com/?ref=static-ai-block">onetagai.com</a>, or run this and the key arrives in your inbox (one key per email, 1,000,000 free tokens):</p>
@@ -84,8 +85,9 @@
 </main>
 <script>
   const source = document.querySelector(".block-code code").textContent;
+  const readsPage = false;
   const key = window.AI_BLOCKS_PREVIEW_KEY || "YOUR_ONETAG_KEY";
-  document.querySelector(".live iframe").srcdoc = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0;padding:14px;background:#f5f7fb;font:15px/1.5 system-ui,sans-serif;color:#0b1020}</style></head><body><main><p style="margin:0 0 12px;font-size:13px;color:#6b7280">Sample page the block reads: a note on sourdough. A starter is flour and water left to ferment; it leavens bread with wild yeast. Feed it daily at room temperature or weekly in the fridge. A loaf needs about 20% starter, a 12 to 18 hour cold proof and a 250 °C oven with steam for the first 20 minutes.</p>` + source.replace(/YOUR_ONETAG_KEY/g, key) + `</main></body></html>`;
+  document.querySelector(".live iframe").srcdoc = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0;padding:14px;background:#f5f7fb;font:15px/1.5 system-ui,sans-serif;color:#0b1020}</style></head><body><main>` + (readsPage ? `<p style="margin:0 0 12px;font-size:13px;color:#6b7280">Sample page the block reads: a note on sourdough. A starter is flour and water left to ferment; it leavens bread with wild yeast. Feed it daily at room temperature or weekly in the fridge. A loaf needs about 20% starter, a 12 to 18 hour cold proof and a 250 °C oven with steam for the first 20 minutes.</p>` : "") + source.replace(/YOUR_ONETAG_KEY/g, key) + `</main></body></html>`;
   const flash = (btn, text) => { const t = btn.textContent; btn.textContent = text; setTimeout(() => { btn.textContent = t; }, 1500); };
   document.querySelector("[data-copy]").addEventListener("click", async (e) => { try { await navigator.clipboard.writeText(source); flash(e.target, "Copied"); } catch {} });
   document.querySelector("[data-ai]").addEventListener("click", async (e) => {
