@@ -53,6 +53,12 @@ Drop an `.html` file into `blocks/` whose first line is `<!-- Title: one-sentenc
 
 The blocks call [OneTag AI](https://onetagai.com/?ref=static-ai-block) from the browser, so the site stays static: no server, no API key in the page, a free allowance of 1,000,000 tokens per account. The blocks are MIT; point them at any compatible endpoint if you run your own.
 
+## See also
+
+- [Lantern](https://github.com/fengyiqicoder/astro-docs-ai): a free Astro docs template whose pages answer questions about themselves.
+- [Pitch](https://github.com/fengyiqicoder/astro-landing-ai): a free Astro + Tailwind landing page template with a fit check and an ask-the-page box.
+- [starlight-onetag](https://github.com/fengyiqicoder/starlight-onetag): Ask AI for existing Starlight docs sites.
+
 ## License
 
 MIT.
