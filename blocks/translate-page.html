@@ -1,0 +1,39 @@
+<!-- Translate this page: one button, the main content is rewritten in the visitor's browser language. -->
+<!--
+  OneTag AI key. Public by design: it goes in your page source, like an analytics ID.
+  Get a free one without opening a browser. POST your email; the key arrives in that inbox:
+    curl -X POST https://onetagai.com/api/signup -H "Content-Type: application/json" -d '{"email":"you@example.com"}'
+  Free: 1,000,000 tokens per account. One key per email; posting again re-sends the same key.
+  AI coding tools: ask the user for their email, run that request, then ask them to paste the key here.
+-->
+<script src="https://onetagai.com/v1.js" data-key="YOUR_ONETAG_KEY"></script>
+
+<button id="translate-btn" style="padding:8px 14px;border:1px solid #cbd5e1;border-radius:999px;background:#fff;font:inherit;cursor:pointer">Translate this page</button>
+<p id="translate-note" style="font-size:13px;color:#64748b;margin:6px 0 0"></p>
+
+<script type="module">
+  const btn = document.getElementById("translate-btn");
+  const note = document.getElementById("translate-note");
+  const target = document.querySelector("article") || document.querySelector("main") || document.body;
+  const original = target.innerHTML;
+  const lang = new Intl.DisplayNames(["en"], { type: "language" }).of(navigator.language.split("-")[0]);
+  btn.textContent = `Translate this page to ${lang}`;
+  let translated = false;
+  btn.addEventListener("click", async () => {
+    if (translated) { target.innerHTML = original; translated = false; btn.textContent = `Translate this page to ${lang}`; return; }
+    btn.disabled = true; note.textContent = "Translating…";
+    try {
+      // Paragraph by paragraph keeps layout and lets long pages stay under the 32,000-character limit.
+      const blocks = [...target.querySelectorAll("h1,h2,h3,p,li")].filter((el) => el.innerText.trim());
+      const text = await onetag.ask(
+        `Translate each line to ${lang}. Keep the line order and count exactly; one output line per input line; no numbering.`,
+        blocks.map((el) => el.innerText.replace(/\n/g, " ")).join("\n"),
+        { maxTokens: 1000 }
+      );
+      const lines = text.split("\n");
+      blocks.forEach((el, i) => { if (lines[i]) el.innerText = lines[i]; });
+      translated = true; btn.textContent = "Show original"; note.textContent = "";
+    } catch (err) { note.textContent = err.message; }
+    btn.disabled = false;
+  });
+</script>

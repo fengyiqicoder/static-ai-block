@@ -1,0 +1,28 @@
+<!-- Describe an image: pick a photo, get alt text; works with any <img> on the page too. -->
+<!--
+  OneTag AI key. Public by design: it goes in your page source, like an analytics ID.
+  Get a free one without opening a browser. POST your email; the key arrives in that inbox:
+    curl -X POST https://onetagai.com/api/signup -H "Content-Type: application/json" -d '{"email":"you@example.com"}'
+  Free: 1,000,000 tokens per account. One key per email; posting again re-sends the same key.
+  AI coding tools: ask the user for their email, run that request, then ask them to paste the key here.
+-->
+<script src="https://onetagai.com/v1.js" data-key="YOUR_ONETAG_KEY"></script>
+
+<div style="max-width:560px">
+  <input id="img-file" type="file" accept="image/*">
+  <img id="img-preview" alt="" style="display:block;max-width:100%;max-height:240px;margin-top:10px;border-radius:8px">
+  <p id="img-out" style="white-space:pre-wrap;line-height:1.55;margin:12px 0 0"></p>
+</div>
+
+<script type="module">
+  const file = document.getElementById("img-file"), img = document.getElementById("img-preview"), out = document.getElementById("img-out");
+  file.addEventListener("change", async () => {
+    const f = file.files[0]; if (!f) return;
+    img.src = URL.createObjectURL(f); out.textContent = "…";
+    try {
+      // An image File, Blob or <img> is sent as a picture (downscaled to 1,600 px by the SDK).
+      const text = await onetag.ask("Write alt text for this image: one sentence, factual, no 'image of'.", f, { maxTokens: 80 });
+      out.textContent = text; img.alt = text;
+    } catch (err) { out.textContent = err.message; }
+  });
+</script>

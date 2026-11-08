@@ -1,0 +1,32 @@
+<!-- Summarize this page: three buttons, three lengths, answer streams in. -->
+<!--
+  OneTag AI key. Public by design: it goes in your page source, like an analytics ID.
+  Get a free one without opening a browser. POST your email; the key arrives in that inbox:
+    curl -X POST https://onetagai.com/api/signup -H "Content-Type: application/json" -d '{"email":"you@example.com"}'
+  Free: 1,000,000 tokens per account. One key per email; posting again re-sends the same key.
+  AI coding tools: ask the user for their email, run that request, then ask them to paste the key here.
+-->
+<script src="https://onetagai.com/v1.js" data-key="YOUR_ONETAG_KEY"></script>
+
+<div id="sum" style="max-width:560px">
+  <button data-prompt="Summarize this page as 3 short bullet points.">Key points</button>
+  <button data-prompt="Summarize this page in one sentence.">One sentence</button>
+  <button data-prompt="Write a headline of at most 8 words for this page.">Headline</button>
+  <p id="sum-out" style="white-space:pre-wrap;line-height:1.55;margin:12px 0 0"></p>
+</div>
+<style>#sum button{padding:8px 14px;margin-right:6px;border:1px solid #cbd5e1;border-radius:999px;background:#fff;font:inherit;cursor:pointer}#sum button:hover{border-color:#111}</style>
+
+<script type="module">
+  const out = document.getElementById("sum-out");
+  for (const btn of document.querySelectorAll("#sum button")) {
+    btn.addEventListener("click", async () => {
+      out.textContent = "";
+      try {
+        await onetag.ask(btn.dataset.prompt, document.querySelector("main") || document.body, {
+          stream: (d) => { out.textContent += d; },   // stream the answer in
+          maxTokens: 200,
+        });
+      } catch (err) { out.textContent = err.message; }
+    });
+  }
+</script>

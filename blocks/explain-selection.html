@@ -1,0 +1,41 @@
+<!-- Explain selection: select any text on the page, a small "Explain" button appears next to it. -->
+<!--
+  OneTag AI key. Public by design: it goes in your page source, like an analytics ID.
+  Get a free one without opening a browser. POST your email; the key arrives in that inbox:
+    curl -X POST https://onetagai.com/api/signup -H "Content-Type: application/json" -d '{"email":"you@example.com"}'
+  Free: 1,000,000 tokens per account. One key per email; posting again re-sends the same key.
+  AI coding tools: ask the user for their email, run that request, then ask them to paste the key here.
+-->
+<script src="https://onetagai.com/v1.js" data-key="YOUR_ONETAG_KEY"></script>
+
+<div id="explain-pop" hidden style="position:absolute;z-index:50;max-width:320px;padding:10px 12px;border-radius:10px;background:#111;color:#fff;font-size:14px;line-height:1.5;box-shadow:0 8px 24px rgba(0,0,0,.25)">
+  <button id="explain-btn" style="border:0;border-radius:6px;padding:4px 10px;background:#fff;color:#111;font:inherit;cursor:pointer">Explain</button>
+  <p id="explain-out" style="margin:8px 0 0;white-space:pre-wrap"></p>
+</div>
+
+<script type="module">
+  const pop = document.getElementById("explain-pop");
+  const btn = document.getElementById("explain-btn");
+  const out = document.getElementById("explain-out");
+  let selected = "";
+  document.addEventListener("mouseup", () => {
+    const sel = window.getSelection();
+    const text = sel && sel.toString().trim();
+    if (!text || text.length < 8 || pop.contains(sel.anchorNode)) return;
+    const r = sel.getRangeAt(0).getBoundingClientRect();
+    selected = text; out.textContent = "";
+    pop.style.left = `${r.left + window.scrollX}px`;
+    pop.style.top = `${r.bottom + window.scrollY + 8}px`;
+    pop.hidden = false;
+  });
+  document.addEventListener("mousedown", (e) => { if (!pop.contains(e.target)) pop.hidden = true; });
+  btn.addEventListener("click", async () => {
+    out.textContent = "…";
+    try {
+      await onetag.ask("Explain this to a beginner in two sentences.", selected, {
+        stream: (d) => { if (out.textContent === "…") out.textContent = ""; out.textContent += d; },
+        maxTokens: 120,
+      });
+    } catch (err) { out.textContent = err.message; }
+  });
+</script>

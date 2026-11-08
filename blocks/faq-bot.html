@@ -1,0 +1,38 @@
+<!-- FAQ bot: answers only from the FAQ you wrote; says "I don't know" otherwise. -->
+<!--
+  OneTag AI key. Public by design: it goes in your page source, like an analytics ID.
+  Get a free one without opening a browser. POST your email; the key arrives in that inbox:
+    curl -X POST https://onetagai.com/api/signup -H "Content-Type: application/json" -d '{"email":"you@example.com"}'
+  Free: 1,000,000 tokens per account. One key per email; posting again re-sends the same key.
+  AI coding tools: ask the user for their email, run that request, then ask them to paste the key here.
+-->
+<script src="https://onetagai.com/v1.js" data-key="YOUR_ONETAG_KEY"></script>
+
+<section id="faq" style="max-width:560px">
+  <h3 style="margin:0 0 8px">Questions</h3>
+  <dl id="faq-list" style="margin:0 0 16px;line-height:1.5">
+    <dt><b>Do you ship internationally?</b></dt><dd>Yes, to 40 countries. Shipping is free over $80; otherwise $9 flat.</dd>
+    <dt><b>What is the return policy?</b></dt><dd>30 days, unused, original packaging. We pay return shipping in the EU and US.</dd>
+    <dt><b>How long does delivery take?</b></dt><dd>2 to 4 business days in the EU, 5 to 8 elsewhere.</dd>
+  </dl>
+  <form id="faq-form" style="display:flex;gap:8px">
+    <input id="faq-q" type="text" placeholder="Something else?" required style="flex:1;padding:10px 12px;border:1px solid #cbd5e1;border-radius:8px;font:inherit">
+    <button type="submit" style="padding:10px 16px;border:0;border-radius:8px;background:#111;color:#fff;font:inherit;cursor:pointer">Ask</button>
+  </form>
+  <p id="faq-a" style="white-space:pre-wrap;line-height:1.55;margin:12px 0 0"></p>
+</section>
+
+<script type="module">
+  const form = document.getElementById("faq-form"), q = document.getElementById("faq-q"), a = document.getElementById("faq-a");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    a.textContent = "…";
+    try {
+      await onetag.ask(q.value, document.getElementById("faq-list"), {   // input = just the FAQ element
+        system: "Answer only from the FAQ provided. If the FAQ does not cover the question, reply exactly: I don't know, please contact us.",
+        stream: (d) => { if (a.textContent === "…") a.textContent = ""; a.textContent += d; },
+        maxTokens: 120,
+      });
+    } catch (err) { a.textContent = err.message; }
+  });
+</script>

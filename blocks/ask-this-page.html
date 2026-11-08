@@ -1,0 +1,36 @@
+<!-- Ask this page: a question box that answers from the page's own content, with follow-ups. -->
+<!--
+  OneTag AI key. Public by design: it goes in your page source, like an analytics ID.
+  Get a free one without opening a browser. POST your email; the key arrives in that inbox:
+    curl -X POST https://onetagai.com/api/signup -H "Content-Type: application/json" -d '{"email":"you@example.com"}'
+  Free: 1,000,000 tokens per account. One key per email; posting again re-sends the same key.
+  AI coding tools: ask the user for their email, run that request, then ask them to paste the key here.
+-->
+<script src="https://onetagai.com/v1.js" data-key="YOUR_ONETAG_KEY"></script>
+
+<form id="ask-form" style="display:flex;gap:8px;max-width:560px">
+  <input id="ask-input" type="text" placeholder="Ask anything about this page" required
+         style="flex:1;padding:10px 12px;border:1px solid #cbd5e1;border-radius:8px;font:inherit">
+  <button type="submit" style="padding:10px 16px;border:0;border-radius:8px;background:#111;color:#fff;font:inherit;cursor:pointer">Ask</button>
+</form>
+<p id="ask-answer" style="max-width:560px;white-space:pre-wrap;line-height:1.55;margin:12px 0 0;padding-left:12px;border-left:3px solid #111"></p>
+
+<script type="module">
+  const form = document.getElementById("ask-form");
+  const input = document.getElementById("ask-input");
+  const out = document.getElementById("ask-answer");
+  const history = [];                      // earlier turns, so follow-ups work
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const q = input.value.trim(); if (!q) return;
+    input.value = ""; out.textContent = "…";
+    try {
+      const text = await onetag.ask(q, document.body, {   // input = the whole page
+        system: "Answer only from the page content. If it is not covered, say so in one sentence.",
+        history,
+        stream: (d) => { if (out.textContent === "…") out.textContent = ""; out.textContent += d; },
+      });
+      history.push({ role: "user", content: q }, { role: "assistant", content: text });
+    } catch (err) { out.textContent = err.message; }
+  });
+</script>
