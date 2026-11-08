@@ -6,7 +6,7 @@
       "file": "blocks/ask-this-page.html",
       "page": "b/ask-this-page.html",
       "title": "Ask this page",
-      "description": "A question box that answers from the page's own content, with follow-ups.",
+      "description": "Ask anything about this page and get an answer from it.",
       "group": "Read",
       "lines": 59
     },
@@ -14,17 +14,17 @@
       "id": "explain-selection",
       "file": "blocks/explain-selection.html",
       "page": "b/explain-selection.html",
-      "title": "Explain selection",
-      "description": "Select any text on the page and an \"Explain\" button appears next to it.",
+      "title": "Explain any selection",
+      "description": "Select any text on the page to get it explained.",
       "group": "Read",
-      "lines": 62
+      "lines": 61
     },
     {
       "id": "summarize-page",
       "file": "blocks/summarize-page.html",
       "page": "b/summarize-page.html",
       "title": "Summarize this page",
-      "description": "Three buttons, three lengths, the answer streams in.",
+      "description": "Summarize this page in one click.",
       "group": "Read",
       "lines": 54
     },
@@ -33,7 +33,7 @@
       "file": "blocks/translate-page.html",
       "page": "b/translate-page.html",
       "title": "Translate this page",
-      "description": "Pick a language and the main content is rewritten in it; click again to restore.",
+      "description": "Translate the whole page into another language.",
       "group": "Read",
       "lines": 61
     },
@@ -42,7 +42,7 @@
       "file": "blocks/faq-bot.html",
       "page": "b/faq-bot.html",
       "title": "FAQ bot",
-      "description": "Answers only from the FAQ you wrote; says \"I don't know\" for anything else.",
+      "description": "Answers only from your FAQ, says \"I don't know\" otherwise.",
       "group": "Chat",
       "lines": 60
     },
@@ -51,7 +51,7 @@
       "file": "blocks/draft-reply.html",
       "page": "b/draft-reply.html",
       "title": "Draft a reply",
-      "description": "Paste an email, review or ticket, pick a tone, get a reply you can edit.",
+      "description": "Paste a message, get a reply in the tone you pick.",
       "group": "Write",
       "lines": 51
     },
@@ -60,7 +60,7 @@
       "file": "blocks/rewrite.html",
       "page": "b/rewrite.html",
       "title": "Rewrite",
-      "description": "Make any text shorter, longer, formal or friendly, in place.",
+      "description": "Make any text shorter, longer, formal or friendly.",
       "group": "Write",
       "lines": 54
     },
@@ -69,7 +69,7 @@
       "file": "blocks/extract-json.html",
       "page": "b/extract-json.html",
       "title": "Extract to JSON",
-      "description": "Paste messy text, get structured fields back as an object.",
+      "description": "Turn messy text into structured fields.",
       "group": "Extract",
       "lines": 49
     },
@@ -78,7 +78,7 @@
       "file": "blocks/smart-search.html",
       "page": "b/smart-search.html",
       "title": "Smart search",
-      "description": "Describe what you want in plain words and the matching items light up.",
+      "description": "Search a list in plain words; matches light up.",
       "group": "Extract",
       "lines": 60
     },
@@ -87,7 +87,7 @@
       "file": "blocks/describe-image.html",
       "page": "b/describe-image.html",
       "title": "Describe an image",
-      "description": "Alt text for any photo, from a file or any <img> on the page.",
+      "description": "Get alt text for any image.",
       "group": "See",
       "lines": 53
     },
@@ -96,7 +96,7 @@
       "file": "blocks/code-explain.html",
       "page": "b/code-explain.html",
       "title": "Explain code",
-      "description": "An Explain button on every code block on the page.",
+      "description": "Adds an Explain button to every code block.",
       "group": "Learn",
       "lines": 52
     },
@@ -105,7 +105,7 @@
       "file": "blocks/quiz.html",
       "page": "b/quiz.html",
       "title": "Quiz from this page",
-      "description": "Three multiple-choice questions generated from the page content.",
+      "description": "Turn this page into a three-question quiz.",
       "group": "Learn",
       "lines": 55
     }

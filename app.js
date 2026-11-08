@@ -3,7 +3,7 @@
   const grid = document.getElementById("blocks");
   const previewKey = window.AI_BLOCKS_PREVIEW_KEY || "YOUR_ONETAG_KEY";
 
-  const SAMPLE = `<main style="margin-bottom:16px"><p style="margin:0 0 12px;font-size:13px;color:#6b7280">Sample page the block reads: a note on sourdough. A starter is flour and water left to ferment; it leavens bread with wild yeast. Feed it daily at room temperature or weekly in the fridge. A loaf needs about 20% starter, a 12 to 18 hour cold proof and a 250 °C oven with steam for the first 20 minutes.</p>`;
+  const SAMPLE = `<main><p style="position:absolute;left:-9999px;top:0">Sample page: a note on sourdough. A starter is flour and water left to ferment; it leavens bread with wild yeast. Feed it daily at room temperature or weekly in the fridge. A loaf needs about 20% starter, a 12 to 18 hour cold proof and a 250 °C oven with steam for the first 20 minutes.</p>`;
 
   // Each card is the block itself, running live inside a plain page with the demo key swapped in.
   const READS_PAGE = new Set(["ask-this-page","summarize-page","explain-selection","translate-page","quiz","code-explain"]);

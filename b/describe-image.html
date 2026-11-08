@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Describe an image: free AI block for any static website | Static AI Block</title>
-<meta name="description" content="Alt text for any photo, from a file or any &lt;img&gt; on the page. Copy the block, paste it into any static page, replace one key. Plain HTML and JavaScript, no backend.">
+<meta name="description" content="Get alt text for any image. Copy the block, paste it into any static page, replace one key. Plain HTML and JavaScript, no backend.">
 <link rel="canonical" href="https://fengyiqicoder.github.io/static-ai-block/b/describe-image.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../style.css?v=20261108b">
@@ -14,11 +14,11 @@
 <header class="page-top"><a class="brand" href="../">Static AI Block</a><nav class="side-links"><a href="../#blocks">All blocks</a><a href="../#get-key">Get a free key</a><a href="https://github.com/fengyiqicoder/static-ai-block">GitHub</a></nav></header>
 <main class="page-main">
 <h1>Describe an image</h1>
-<p class="lede">Alt text for any photo, from a file or any &lt;img&gt; on the page. 53 lines of plain HTML and JavaScript. Copy it, paste it into any static page, replace <code>YOUR_ONETAG_KEY</code> with a free key.</p>
+<p class="lede">Get alt text for any image. 53 lines of plain HTML and JavaScript. Copy it, paste it into any static page, replace <code>YOUR_ONETAG_KEY</code> with a free key.</p>
 <p class="actions"><button class="button" data-copy>Copy block</button> <button class="button secondary" data-ai>Copy to AI</button></p>
 <div class="live"><iframe title="Describe an image (live)" sandbox="allow-scripts allow-same-origin allow-forms allow-modals"></iframe></div>
 <h2>The code</h2>
-<pre class="block-code"><code>&lt;!-- Describe an image: alt text for any photo, from a file or any &lt;img&gt; on the page. --&gt;
+<pre class="block-code"><code>&lt;!-- Describe an image: Get alt text for any image. --&gt;
 &lt;!--
   OneTag AI key. Public by design: it goes in your page source, like an analytics ID.
   Get a free one without opening a browser. POST your email; the key arrives in that inbox:
@@ -47,7 +47,7 @@
 
 &lt;section class="sab" id="sab-img"&gt;
   &lt;div class="sab-head"&gt;&lt;span class="sab-icon" aria-hidden="true"&gt;&lt;svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;rect x="3" y="4" width="18" height="16" rx="2"/&gt;&lt;circle cx="9" cy="10" r="2"/&gt;&lt;path d="M21 16l-5-5-8 8"/&gt;&lt;/svg&gt;&lt;/span&gt;
-    &lt;div&gt;&lt;h3 class="sab-title"&gt;Describe an image&lt;/h3&gt;&lt;p class="sab-hint"&gt;Pick a photo and get alt text in one sentence. Works with any &amp;lt;img&amp;gt; on the page too.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;h3 class="sab-title"&gt;Describe an image&lt;/h3&gt;&lt;p class="sab-hint"&gt;Get alt text for any image.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
   &lt;div class="sab-row" style="align-items:center"&gt;
     &lt;label class="sab-btn" style="display:inline-block"&gt;&lt;input id="img-file" type="file" accept="image/*" style="display:none"&gt;Choose a photo&lt;/label&gt;
     &lt;button class="sab-chip" type="button" id="img-sample"&gt;Try the sample image&lt;/button&gt;
@@ -80,7 +80,7 @@
   const source = document.querySelector(".block-code code").textContent;
   const readsPage = false;
   const key = window.AI_BLOCKS_PREVIEW_KEY || "YOUR_ONETAG_KEY";
-  document.querySelector(".live iframe").srcdoc = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0;padding:14px;background:#f5f7fb;font:15px/1.5 system-ui,sans-serif;color:#0b1020}</style></head><body><main>` + (readsPage ? `<p style="margin:0 0 12px;font-size:13px;color:#6b7280">Sample page the block reads: a note on sourdough. A starter is flour and water left to ferment; it leavens bread with wild yeast. Feed it daily at room temperature or weekly in the fridge. A loaf needs about 20% starter, a 12 to 18 hour cold proof and a 250 °C oven with steam for the first 20 minutes.</p>` : "") + source.replace(/YOUR_ONETAG_KEY/g, key) + `</main></body></html>`;
+  document.querySelector(".live iframe").srcdoc = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0;padding:14px;background:#f5f7fb;font:15px/1.5 system-ui,sans-serif;color:#0b1020}</style></head><body><main>` + (readsPage ? `<p style="position:absolute;left:-9999px;top:0">Sample page: a note on sourdough. A starter is flour and water left to ferment; it leavens bread with wild yeast. Feed it daily at room temperature or weekly in the fridge. A loaf needs about 20% starter, a 12 to 18 hour cold proof and a 250 °C oven with steam for the first 20 minutes.</p>` : "") + source.replace(/YOUR_ONETAG_KEY/g, key) + `</main></body></html>`;
   const flash = (btn, text) => { const t = btn.textContent; btn.textContent = text; setTimeout(() => { btn.textContent = t; }, 1500); };
   document.querySelector("[data-copy]").addEventListener("click", async (e) => { try { await navigator.clipboard.writeText(source); flash(e.target, "Copied"); } catch {} });
   document.querySelector("[data-ai]").addEventListener("click", async (e) => {
