@@ -2,7 +2,7 @@
 // Run with `node build.mjs` after adding or editing a block.
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 
-const SITE = "https://fengyiqicoder.github.io/static-ai-block";
+const SITE = "https://aiblock.onetagai.com";
 const groups = {
 	"ask-this-page": "Read", "summarize-page": "Read", "explain-selection": "Read", "translate-page": "Read",
 	"faq-bot": "Chat", "draft-reply": "Write", "rewrite": "Write",

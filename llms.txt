@@ -4,15 +4,15 @@
 
 ## Blocks
 
-- [Summarize this page](https://fengyiqicoder.github.io/static-ai-block/blocks/summarize-page.html): Summarize this page in one click.
-- [Ask this page](https://fengyiqicoder.github.io/static-ai-block/blocks/ask-this-page.html): Ask anything about this page and get an answer from it.
-- [FAQ bot](https://fengyiqicoder.github.io/static-ai-block/blocks/faq-bot.html): Answers only from your FAQ, says "I don't know" otherwise.
-- [Rewrite](https://fengyiqicoder.github.io/static-ai-block/blocks/rewrite.html): Make any text shorter, longer, formal or friendly.
-- [Translate this page](https://fengyiqicoder.github.io/static-ai-block/blocks/translate-page.html): Translate the whole page into another language.
-- [Draft a reply](https://fengyiqicoder.github.io/static-ai-block/blocks/draft-reply.html): Paste a message, get a reply in the tone you pick.
-- [Extract to JSON](https://fengyiqicoder.github.io/static-ai-block/blocks/extract-json.html): Turn messy text into structured fields.
-- [Smart search](https://fengyiqicoder.github.io/static-ai-block/blocks/smart-search.html): Search a list in plain words; matches light up.
-- [Explain any selection](https://fengyiqicoder.github.io/static-ai-block/blocks/explain-selection.html): Select any text on the page to get it explained.
-- [Describe an image](https://fengyiqicoder.github.io/static-ai-block/blocks/describe-image.html): Get alt text for any image.
-- [Quiz from this page](https://fengyiqicoder.github.io/static-ai-block/blocks/quiz.html): Turn this page into a three-question quiz.
-- [Explain code](https://fengyiqicoder.github.io/static-ai-block/blocks/code-explain.html): Adds an Explain button to every code block.
+- [Summarize this page](https://aiblock.onetagai.com/blocks/summarize-page.html): Summarize this page in one click.
+- [Ask this page](https://aiblock.onetagai.com/blocks/ask-this-page.html): Ask anything about this page and get an answer from it.
+- [FAQ bot](https://aiblock.onetagai.com/blocks/faq-bot.html): Answers only from your FAQ, says "I don't know" otherwise.
+- [Rewrite](https://aiblock.onetagai.com/blocks/rewrite.html): Make any text shorter, longer, formal or friendly.
+- [Translate this page](https://aiblock.onetagai.com/blocks/translate-page.html): Translate the whole page into another language.
+- [Draft a reply](https://aiblock.onetagai.com/blocks/draft-reply.html): Paste a message, get a reply in the tone you pick.
+- [Extract to JSON](https://aiblock.onetagai.com/blocks/extract-json.html): Turn messy text into structured fields.
+- [Smart search](https://aiblock.onetagai.com/blocks/smart-search.html): Search a list in plain words; matches light up.
+- [Explain any selection](https://aiblock.onetagai.com/blocks/explain-selection.html): Select any text on the page to get it explained.
+- [Describe an image](https://aiblock.onetagai.com/blocks/describe-image.html): Get alt text for any image.
+- [Quiz from this page](https://aiblock.onetagai.com/blocks/quiz.html): Turn this page into a three-question quiz.
+- [Explain code](https://aiblock.onetagai.com/blocks/code-explain.html): Adds an Explain button to every code block.
