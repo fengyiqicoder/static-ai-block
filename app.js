@@ -26,6 +26,7 @@ ${source}`;
     const el = document.createElement("article");
     el.className = "card"; el.id = b.id;
     el.innerHTML = `<div class="card-inner">
+      <div class="card-head"><h3>${b.title}</h3><span class="tag">${b.id}</span></div>
       <div class="card-live"><iframe loading="lazy" title="${b.title} (live)" sandbox="allow-scripts allow-same-origin allow-forms allow-modals"></iframe></div>
       <pre class="card-code" hidden><code></code></pre>
       <div class="card-bar">
@@ -51,9 +52,9 @@ ${source}`;
     return el;
   }
 
-  // Masonry: the grid has 8px rows; each card spans as many rows as its content needs,
+  // Masonry: the grid has 12px rows; each card spans as many rows as its content needs,
   // so cards of different heights pack without gaps and keep their left-to-right order.
-  const ROW = 8, GAP = 22;
+  const ROW = 12, GAP = 24;
   const fit = (card) => {
     const inner = card.querySelector(".card-inner");
     card.style.gridRowEnd = "span " + Math.ceil((inner.getBoundingClientRect().height + GAP) / ROW);

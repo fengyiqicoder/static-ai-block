@@ -11,26 +11,36 @@
 <meta property="og:description" content="Twelve AI blocks you can paste into any static page. One script tag, no backend, free key.">
 <meta property="og:image" content="https://aiblock.onetagai.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="style.css?v=20261108b">
+<link rel="stylesheet" href="style.css?v=20261109">
 <script src="config.js"></script>
 </head>
 <body>
 <header class="site-header">
   <a class="wordmark" href="./">Static AI Block</a>
-  <nav aria-label="Main"><a href="#blocks">Blocks</a><a href="#get-key">Get a key</a><a href="https://github.com/fengyiqicoder/static-ai-block">GitHub</a><a href="https://onetagai.com/docs?ref=static-ai-block">OneTag docs</a></nav>
+  <nav aria-label="Main"><a class="desk" href="#blocks">Blocks</a><a class="desk" href="#get-key">Get a key</a><a href="https://onetagai.com/docs?ref=static-ai-block">Docs</a><a href="https://github.com/fengyiqicoder/static-ai-block">GitHub</a></nav>
 </header>
 
 <main>
   <section class="hero">
         <h1>Copy-paste AI blocks for static sites.</h1>
     <p class="lead">One script tag, no backend. Try any block below.</p>
-    <p class="actions"><a class="button" href="#blocks">Browse the blocks</a><a class="button secondary" href="#get-key">Get a free key</a></p>
+    <nav class="bar" aria-label="Where to go next">
+      <a href="#blocks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18"/><path d="M3 9h18M9 9v12"/></svg>Browse the blocks</a>
+      <a href="#get-key"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M10.9 12.1 21 2M15 8l3 3M18 5l3 3"/></svg>Get a free key</a>
+      <a href="https://github.com/fengyiqicoder/static-ai-block"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.4-1.1-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.2-4.6-1.1-4.6-4.9 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.8-2.3 4.7-4.6 4.9.4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg>GitHub</a>
+    </nav>
     <pre class="snippet"><code>&lt;script src="https://onetagai.com/v1.js" data-key="YOUR_ONETAG_KEY"&gt;&lt;/script&gt;</code></pre>
     <p class="powered">Powered by <a href="https://onetagai.com/?ref=static-ai-block">OneTag AI</a>: the blocks call it from the browser, so your site stays static.</p>
     <a class="star-line" id="star-banner" href="https://github.com/fengyiqicoder/static-ai-block">Open source, MIT. Star it on GitHub <span id="star-count"></span></a>
   </section>
 
-  <section id="blocks" class="grid" aria-label="All blocks"></section>
+  <section class="blocks" aria-labelledby="blocks-title">
+    <div class="section-head">
+      <h2 id="blocks-title">The blocks</h2>
+      <p>Each one is a complete HTML file under 60 lines, running live below on a shared demo key. Copy block gives you the file; Copy to AI gives it to Cursor, Claude Code or any coding agent with the setup steps.</p>
+    </div>
+    <div id="blocks" class="grid" aria-label="All blocks"></div>
+  </section>
 
   <section id="get-key" class="getkey">
     <h2>Use a block on your site</h2>
@@ -53,6 +63,6 @@
 </main>
 
 <footer class="site-footer"><p>MIT. Plain HTML and vanilla JS, no framework, no build step. AI by <a href="https://onetagai.com/?ref=static-ai-block">OneTag AI</a>. <a href="llms.txt">llms.txt</a></p></footer>
-<script src="app.js?v=20261108b"></script>
+<script src="app.js?v=20261109"></script>
 </body>
 </html>
