@@ -55,8 +55,8 @@ The blocks call [OneTag AI](https://onetagai.com/?ref=static-ai-block) from the 
 
 ## See also
 
-- [Lantern](https://github.com/fengyiqicoder/astro-docs-ai): a free Astro docs template whose pages answer questions about themselves.
-- [Pitch](https://github.com/fengyiqicoder/astro-landing-ai): a free Astro + Tailwind landing page template with a fit check and an ask-the-page box.
+- [Astro AI Docs](https://github.com/fengyiqicoder/astro-ai-docs): a free Astro docs template whose pages answer questions about themselves.
+- [Astro AI Landing Page](https://github.com/fengyiqicoder/astro-ai-landing): a free Astro + Tailwind landing page template with a fit check and an ask-the-page box.
 - [starlight-onetag](https://github.com/fengyiqicoder/starlight-onetag): Ask AI for existing Starlight docs sites.
 
 ## License
