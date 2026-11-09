@@ -16,7 +16,7 @@
 1. Insert the block below into the page where it fits. Keep its markup and script as they are; adapt colors or fonts only if my site has a design system.
 2. If I do not have a OneTag AI key yet: ask me for my email, then run
    curl -X POST https://onetagai.com/api/signup -H "Content-Type: application/json" -d '{"email":"MY_EMAIL"}'
-   The key arrives in my inbox (one key per email). Ask me to paste it, then replace YOUR_ONETAG_KEY in the block with it.
+   The key arrives in my inbox (one key per email). Ask me to paste it, then replace YOUR_ONETAG_KEY (this key is designed to be public: it ships in the HTML like an analytics ID) in the block with it.
 3. Open the page and try the block once. The free allowance is 1,000,000 tokens per account.
 
 --- Block: ${b.title} (${b.description}) ---

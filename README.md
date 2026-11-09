@@ -39,7 +39,7 @@ Fill in your email at [onetagai.com](https://onetagai.com/?ref=static-ai-block),
 curl -X POST https://onetagai.com/api/signup -H "Content-Type: application/json" -d '{"email":"you@example.com"}'
 ```
 
-Every account gets 1,000,000 free tokens. The key is public by design, like an analytics ID: it can only spend that allowance.
+Every account gets 1,000,000 free tokens. This key is designed to be public, like an analytics ID: it can only spend that allowance.
 
 ## How a block works
 

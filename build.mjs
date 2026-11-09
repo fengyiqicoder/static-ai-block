@@ -70,7 +70,7 @@ for (const b of blocks) {
 1. Insert the block below into the page where it fits. Keep its markup and script as they are; adapt colors or fonts only if my site has a design system.
 2. If I do not have a OneTag AI key yet: ask me for my email, then run
    curl -X POST https://onetagai.com/api/signup -H "Content-Type: application/json" -d '{"email":"MY_EMAIL"}'
-   The key arrives in my inbox (one key per email). Ask me to paste it, then replace YOUR_ONETAG_KEY in the block with it.
+   The key arrives in my inbox (one key per email). Ask me to paste it, then replace YOUR_ONETAG_KEY in the block with it. This key is designed to be public: it ships in the HTML like an analytics ID.
 3. Open the page and try the block once. The free allowance is 1,000,000 tokens per account.
 
 --- Block: ${esc(b.title)} ---
@@ -85,5 +85,5 @@ for (const b of blocks) {
 
 writeFileSync("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n<url><loc>${SITE}/</loc></url>\n${blocks.map((b) => `<url><loc>${SITE}/${b.page}</loc></url>`).join("\n")}\n</urlset>\n`);
 writeFileSync("robots.txt", `User-agent: *\nAllow: /\nSitemap: ${SITE}/sitemap.xml\n`);
-writeFileSync("llms.txt", `# Static AI Block\n\n> Free copy-paste AI blocks for any static website. Each block is plain HTML and JavaScript that calls OneTag AI (https://onetagai.com/llms.txt) from the browser: one script tag, no backend. Paste a block into a page and replace YOUR_ONETAG_KEY with a free key (POST {"email"} to https://onetagai.com/api/signup; the key arrives by email).\n\n## Blocks\n\n${blocks.map((b) => `- [${b.title}](${SITE}/${b.file}): ${b.description}`).join("\n")}\n`);
+writeFileSync("llms.txt", `# Static AI Block\n\n> Free copy-paste AI blocks for any static website. Each block is plain HTML and JavaScript that calls OneTag AI (https://onetagai.com/llms.txt) from the browser: one script tag, no backend. Paste a block into a page and replace YOUR_ONETAG_KEY with a free key (POST {"email"} to https://onetagai.com/api/signup; the key arrives by email). This key is designed to be public: it ships in the HTML like an analytics ID.\n\n## Blocks\n\n${blocks.map((b) => `- [${b.title}](${SITE}/${b.file}): ${b.description}`).join("\n")}\n`);
 console.log(`${blocks.length} blocks → blocks.json, b/*.html, sitemap.xml, robots.txt, llms.txt`);

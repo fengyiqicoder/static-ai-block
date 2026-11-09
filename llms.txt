@@ -1,6 +1,6 @@
 # Static AI Block
 
-> Free copy-paste AI blocks for any static website. Each block is plain HTML and JavaScript that calls OneTag AI (https://onetagai.com/llms.txt) from the browser: one script tag, no backend. Paste a block into a page and replace YOUR_ONETAG_KEY with a free key (POST {"email"} to https://onetagai.com/api/signup; the key arrives by email).
+> Free copy-paste AI blocks for any static website. Each block is plain HTML and JavaScript that calls OneTag AI (https://onetagai.com/llms.txt) from the browser: one script tag, no backend. Paste a block into a page and replace YOUR_ONETAG_KEY with a free key (POST {"email"} to https://onetagai.com/api/signup; the key arrives by email). This key is designed to be public: it ships in the HTML like an analytics ID.
 
 ## Blocks
 
