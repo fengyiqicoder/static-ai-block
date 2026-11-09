@@ -39,7 +39,7 @@ for (const b of blocks) {
 <meta name="description" content="${esc(b.description)} Copy the block, paste it into any static page, replace one key. Plain HTML and JavaScript, no backend.">
 <link rel="canonical" href="${SITE}/${b.page}">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="../style.css?v=20261109">
+<link rel="stylesheet" href="../style.css?v=20261109b">
 <script src="../config.js"></script>
 </head>
 <body>
