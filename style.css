@@ -87,6 +87,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 .site-header nav, .page-top .side-links { display: flex; align-items: center; gap: 24px; font-size: 15px; }
 .site-header nav a, .page-top .side-links a { color: var(--muted); }
+.site-header nav a.button { color: #fff; }
 .site-header nav a:hover, .page-top .side-links a:hover { color: var(--text); text-decoration: none; }
 
 /* Text */

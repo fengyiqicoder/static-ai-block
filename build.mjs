@@ -43,7 +43,7 @@ for (const b of blocks) {
 <script src="../config.js"></script>
 </head>
 <body>
-<header class="page-top"><a class="brand" href="../">Static AI Block</a><nav class="side-links"><a href="../#blocks">All blocks</a><a href="../#get-key">Get a free key</a><a href="https://github.com/fengyiqicoder/static-ai-block">GitHub</a></nav></header>
+<header class="page-top"><a class="brand" href="../">Static AI Block</a><nav class="side-links"><a href="../#blocks">All blocks</a><a href="../#get-key">Get a free key</a><a href="https://github.com/fengyiqicoder/static-ai-block">GitHub</a><a href="https://onetagai.com/?ref=static-ai-block">OneTag AI</a></nav></header>
 <main class="page-main">
 <h1>${esc(b.title)}</h1>
 <p class="lede">${esc(b.description)} ${b.lines} lines of plain HTML and JavaScript. Copy it, paste it into any static page, replace <code>YOUR_ONETAG_KEY</code> with a free key.</p>
