@@ -9,11 +9,14 @@
       "sample": "Sample docs page: Installing the Tidepool CLI. Requires Node 20 or newer. Install with npm install -g tidepool, then run tidepool login and paste the token from your dashboard. Config lives in tidepool.toml at the project root; the only required field is project. Run tidepool deploy to publish; add --dry-run to see what would change. On Windows use PowerShell 7; WSL is supported, cmd.exe is not. To uninstall, run npm uninstall -g tidepool and delete ~/.tidepool.",
       "blocks": [
         "ask-this-page",
+        "page-actions",
         "code-explain",
         "explain-selection",
         "summarize-page",
         "translate-page",
+        "chat-launcher",
         "faq-bot",
+        "read-aloud",
         "quiz"
       ]
     },
@@ -24,9 +27,11 @@
       "sample": "Sample product page: Merino beanie, grey, $38. 100% merino wool, 190 gsm, made in Portugal. One size, fits heads 54 to 60 cm. Hand wash cold and dry flat; do not tumble dry. In stock. Ships in 2 to 4 business days in the EU, 5 to 8 elsewhere; shipping is free over $80, otherwise $9 flat. 30-day returns, unused, in the original packaging. Also available in navy and black.",
       "blocks": [
         "ask-this-page",
+        "chat-launcher",
         "smart-search",
         "faq-bot",
         "translate-page",
+        "chat",
         "describe-image",
         "extract-json"
       ]
@@ -38,7 +43,9 @@
       "sample": "Sample landing page: Paperboat, invoicing for freelancers. Send an invoice in 30 seconds, get paid by card or bank transfer, and let automatic reminders chase late payers. Free for up to 3 clients; Pro is $9 a month with unlimited clients and recurring invoices. No contract; export everything as CSV at any time. Works in the EU, UK and US. Not built for teams of more than 5 people or for inventory tracking.",
       "blocks": [
         "faq-bot",
+        "chat-launcher",
         "ask-this-page",
+        "chat",
         "translate-page",
         "extract-json"
       ]
@@ -52,7 +59,10 @@
         "summarize-page",
         "ask-this-page",
         "translate-page",
+        "read-aloud",
+        "page-actions",
         "explain-selection",
+        "chat-launcher",
         "code-explain",
         "quiz",
         "describe-image"
@@ -61,11 +71,14 @@
     {
       "id": "tools",
       "label": "Tools",
-      "blurb": "Single-purpose pages: paste text or an image in, get something useful out.",
+      "blurb": "Single-purpose pages: type, paste or dictate something in, get something useful out.",
       "sample": "Sample page: a note on sourdough. A starter is flour and water left to ferment; it leavens bread with wild yeast. Feed it daily at room temperature or weekly in the fridge. A loaf needs about 20% starter, a 12 to 18 hour cold proof and a 250 °C oven with steam for the first 20 minutes.",
       "blocks": [
+        "chat",
         "rewrite",
         "draft-reply",
+        "autocomplete",
+        "voice-input",
         "extract-json",
         "describe-image"
       ]
@@ -83,14 +96,17 @@
         "docs",
         "blog"
       ],
-      "lines": 56
+      "lines": 62,
+      "needsKey": true,
+      "readsPage": true,
+      "showsPage": false
     },
     {
       "id": "ask-this-page",
       "file": "blocks/ask-this-page.html",
       "page": "b/ask-this-page.html",
       "title": "Ask this page",
-      "description": "Ask anything about this page and get an answer from it.",
+      "description": "Ask anything about this page and get an answer that cites its sources.",
       "group": "Read",
       "uses": [
         "docs",
@@ -98,7 +114,27 @@
         "landing",
         "blog"
       ],
-      "lines": 61
+      "lines": 93,
+      "needsKey": true,
+      "readsPage": true,
+      "showsPage": false
+    },
+    {
+      "id": "chat",
+      "file": "blocks/chat.html",
+      "page": "b/chat.html",
+      "title": "Chat",
+      "description": "A full AI chat with streaming Markdown, code blocks, saved conversations, retry, stop, voice input and feedback.",
+      "group": "Chat",
+      "uses": [
+        "shop",
+        "landing",
+        "tools"
+      ],
+      "lines": 163,
+      "needsKey": true,
+      "readsPage": false,
+      "showsPage": false
     },
     {
       "id": "faq-bot",
@@ -112,26 +148,50 @@
         "shop",
         "landing"
       ],
-      "lines": 62
+      "lines": 65,
+      "needsKey": true,
+      "readsPage": false,
+      "showsPage": false
+    },
+    {
+      "id": "chat-launcher",
+      "file": "blocks/chat-launcher.html",
+      "page": "b/chat-launcher.html",
+      "title": "Chat launcher",
+      "description": "A floating chat button in the corner that answers visitors from the page they are on.",
+      "group": "Chat",
+      "uses": [
+        "docs",
+        "shop",
+        "landing",
+        "blog"
+      ],
+      "lines": 71,
+      "needsKey": true,
+      "readsPage": true,
+      "showsPage": true
     },
     {
       "id": "rewrite",
       "file": "blocks/rewrite.html",
       "page": "b/rewrite.html",
       "title": "Rewrite",
-      "description": "Make any text shorter, longer, formal or friendly.",
+      "description": "Improve, fix or restyle any text, then review the changes before you accept them.",
       "group": "Write",
       "uses": [
         "tools"
       ],
-      "lines": 56
+      "lines": 92,
+      "needsKey": true,
+      "readsPage": false,
+      "showsPage": false
     },
     {
       "id": "translate-page",
       "file": "blocks/translate-page.html",
       "page": "b/translate-page.html",
       "title": "Translate this page",
-      "description": "Translate the whole page into another language.",
+      "description": "Translate the whole page in place, or show the translation under the original.",
       "group": "Read",
       "uses": [
         "docs",
@@ -139,7 +199,10 @@
         "landing",
         "blog"
       ],
-      "lines": 63
+      "lines": 80,
+      "needsKey": true,
+      "readsPage": true,
+      "showsPage": true
     },
     {
       "id": "draft-reply",
@@ -151,7 +214,25 @@
       "uses": [
         "tools"
       ],
-      "lines": 53
+      "lines": 60,
+      "needsKey": true,
+      "readsPage": false,
+      "showsPage": false
+    },
+    {
+      "id": "autocomplete",
+      "file": "blocks/autocomplete.html",
+      "page": "b/autocomplete.html",
+      "title": "Autocomplete",
+      "description": "Ghost-text suggestions while you type; press Tab to accept.",
+      "group": "Write",
+      "uses": [
+        "tools"
+      ],
+      "lines": 92,
+      "needsKey": true,
+      "readsPage": false,
+      "showsPage": false
     },
     {
       "id": "extract-json",
@@ -165,7 +246,10 @@
         "landing",
         "tools"
       ],
-      "lines": 51
+      "lines": 54,
+      "needsKey": true,
+      "readsPage": false,
+      "showsPage": false
     },
     {
       "id": "smart-search",
@@ -177,20 +261,73 @@
       "uses": [
         "shop"
       ],
-      "lines": 62
+      "lines": 65,
+      "needsKey": true,
+      "readsPage": false,
+      "showsPage": false
     },
     {
       "id": "explain-selection",
       "file": "blocks/explain-selection.html",
       "page": "b/explain-selection.html",
       "title": "Explain any selection",
-      "description": "Select any text on the page to get it explained.",
+      "description": "Select any text on the page to explain, simplify or translate it.",
       "group": "Read",
       "uses": [
         "docs",
         "blog"
       ],
-      "lines": 63
+      "lines": 75,
+      "needsKey": true,
+      "readsPage": true,
+      "showsPage": false
+    },
+    {
+      "id": "page-actions",
+      "file": "blocks/page-actions.html",
+      "page": "b/page-actions.html",
+      "title": "Page actions",
+      "description": "Copy this page as Markdown, or open it in ChatGPT or Claude. Uses no key and no tokens.",
+      "group": "Read",
+      "uses": [
+        "docs",
+        "blog"
+      ],
+      "lines": 87,
+      "needsKey": false,
+      "readsPage": true,
+      "showsPage": true
+    },
+    {
+      "id": "read-aloud",
+      "file": "blocks/read-aloud.html",
+      "page": "b/read-aloud.html",
+      "title": "Read aloud",
+      "description": "Listen to the page, or to a short AI summary of it.",
+      "group": "Read",
+      "uses": [
+        "docs",
+        "blog"
+      ],
+      "lines": 93,
+      "needsKey": true,
+      "readsPage": true,
+      "showsPage": true
+    },
+    {
+      "id": "voice-input",
+      "file": "blocks/voice-input.html",
+      "page": "b/voice-input.html",
+      "title": "Voice input",
+      "description": "Dictate with the microphone, then let AI tidy the transcript.",
+      "group": "Write",
+      "uses": [
+        "tools"
+      ],
+      "lines": 77,
+      "needsKey": true,
+      "readsPage": false,
+      "showsPage": false
     },
     {
       "id": "describe-image",
@@ -204,7 +341,10 @@
         "blog",
         "tools"
       ],
-      "lines": 55
+      "lines": 58,
+      "needsKey": true,
+      "readsPage": false,
+      "showsPage": false
     },
     {
       "id": "quiz",
@@ -217,7 +357,10 @@
         "docs",
         "blog"
       ],
-      "lines": 57
+      "lines": 65,
+      "needsKey": true,
+      "readsPage": true,
+      "showsPage": false
     },
     {
       "id": "code-explain",
@@ -230,7 +373,10 @@
         "docs",
         "blog"
       ],
-      "lines": 54
+      "lines": 57,
+      "needsKey": true,
+      "readsPage": true,
+      "showsPage": false
     }
   ]
 }

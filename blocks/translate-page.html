@@ -1,4 +1,4 @@
-<!-- Translate this page: Translate the whole page into another language. -->
+<!-- Translate this page: Translate the whole page in place, or show the translation under the original. -->
 <!--
   OneTag AI key. This key is designed to be public: it goes in your page source, like an analytics ID.
   Get a free one without opening a browser. POST your email; the key arrives in that inbox:
@@ -21,39 +21,56 @@
 .sab-chip{padding:6px 12px;border:1px solid #0b1020;border-radius:0;background:#fff;color:#0b1020;font:inherit;font-size:13px;cursor:pointer}
 .sab-chip:hover{border-color:#0b5fff;color:#0b5fff}
 .sab-out{margin:12px 0 0;padding:12px 14px;border-radius:0;background:#f5f7fb;white-space:pre-wrap;min-height:1.5em}
-.sab-out:empty{display:none}
+.sab-out:empty:not(.sab-wait){display:none}
+.sab-wait:empty::before{content:"Thinking…";color:transparent;background:linear-gradient(90deg,#99a2b5 30%,#0b1020 50%,#99a2b5 70%) 0 0/200% 100%;-webkit-background-clip:text;background-clip:text;animation:sab-wait 1.2s linear infinite}
+@keyframes sab-wait{from{background-position:100% 0}to{background-position:-100% 0}}
+@media (prefers-reduced-motion:reduce){.sab-wait:empty::before{animation:none;color:#99a2b5}}
 .sab-note{margin:10px 0 0;font-size:12px;color:#99a2b5}
 .sab-powered{margin:12px 0 0;text-align:right;font-size:11px;color:#99a2b5}.sab-powered a{color:inherit;text-decoration:none}.sab-powered a:hover{text-decoration:underline}
 </style>
 
 <section class="sab" id="sab-translate">
   <div class="sab-head"><span class="sab-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span>
-    <div><h3 class="sab-title">Translate this page</h3><p class="sab-hint">Translate the whole page into another language.</p></div></div>
-  <div class="sab-row">
-    <select class="sab-select" id="tr-lang" style="flex:0 0 auto"><option>English</option><option>中文</option><option>Español</option><option>Français</option><option>Deutsch</option><option>日本語</option><option>Português</option></select>
+    <div><h3 class="sab-title">Translate this page</h3><p class="sab-hint">Translate the whole page in place, or show the translation under the original.</p></div></div>
+  <div class="sab-row" style="align-items:center">
+    <select class="sab-select" id="tr-lang" style="flex:0 0 auto" aria-label="Language"><option value="en">English</option><option value="zh">中文</option><option value="es">Español</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="ja">日本語</option><option value="pt">Português</option></select>
     <button class="sab-btn" id="tr-btn" type="button">Translate</button>
+    <label style="font-size:13px;display:flex;align-items:center;gap:6px"><input type="checkbox" id="tr-both"> Keep the original</label>
   </div>
-  <p class="sab-note" id="tr-note"></p>
+  <p class="sab-note" id="tr-note" aria-live="polite"></p>
 <p class="sab-powered"><a href="https://onetagai.com/?ref=static-ai-block" rel="noopener">Powered by OneTag AI</a></p>
 </section>
 
 <script type="module">
-  const btn = document.getElementById("tr-btn"), lang = document.getElementById("tr-lang"), note = document.getElementById("tr-note");
+  const btn = document.getElementById("tr-btn"), lang = document.getElementById("tr-lang"), both = document.getElementById("tr-both"), note = document.getElementById("tr-note");
   const target = document.querySelector("article") || document.querySelector("main") || document.body;
-  const browserLang = new Intl.DisplayNames(["en"], { type: "language" }).of(navigator.language.split("-")[0]);
-  for (const o of lang.options) if (o.text === browserLang) lang.value = o.text;
-  let original = null;
+  // Start on the visitor's language, unless the page is already written in it.
+  const codes = [...lang.options].map((o) => o.value), pageLang = (document.documentElement.lang || "en").split("-")[0];
+  lang.value = [navigator.language.split("-")[0], ...codes].find((c) => c !== pageLang && codes.includes(c));
+  let saved = null;                                     // [element, its original HTML] for every translated block
   btn.addEventListener("click", async () => {
-    if (original) { target.innerHTML = original; original = null; btn.textContent = "Translate"; note.textContent = ""; return; }
+    if (saved) { for (const [el, html] of saved) el.innerHTML = html; saved = null; btn.textContent = "Translate"; note.textContent = ""; return; }
+    // One numbered line per block keeps the layout, and a skipped or merged line cannot shift the rest.
+    const blocks = [...target.querySelectorAll("h1,h2,h3,h4,p,li,td,th,blockquote")].filter((el) => el.innerText.trim() && !el.querySelector("p,li") && !el.closest("#sab-translate"));
     btn.disabled = true; note.textContent = "Translating…";
+    let got = "";
     try {
-      // Line per block keeps the layout and keeps long pages under the 32,000-character limit.
-      const blocks = [...target.querySelectorAll("h1,h2,h3,p,li")].filter((el) => el.innerText.trim() && !el.closest("#sab-translate"));
-      const text = await onetag.ask(`Translate each line to ${lang.value}. Keep the line order and count exactly; one output line per input line; no numbering.`,
-        blocks.map((el) => el.innerText.replace(/\n/g, " ")).join("\n"), { maxTokens: 1000 });
-      original = target.innerHTML;
-      const lines = text.split("\n");
-      blocks.forEach((el, i) => { if (lines[i]) el.innerText = lines[i]; });
+      const to = new Intl.DisplayNames(["en"], { type: "language" }).of(lang.value);        // "zh" becomes "Chinese"
+      const text = await onetag.ask(`Translate each numbered line to ${to}. Reply with every line in the same form, [number] translation, and nothing else.`,
+        blocks.map((el, i) => `[${i + 1}] ${el.innerText.replace(/\s+/g, " ")}`).join("\n"), {
+          maxTokens: 4000,
+          stream: (d) => { got += d; note.textContent = `Translating… ${Math.min((got.match(/^\[\d+\]/gm) || []).length, blocks.length)} of ${blocks.length}`; },
+        });
+      const lines = [];
+      for (const [, n, line] of text.matchAll(/^\[(\d+)\]\s*(.+)$/gm)) lines[n - 1] = line.trim();
+      if (!lines.length) throw new Error("The translation came back empty. Try again.");
+      saved = blocks.map((el) => [el, el.innerHTML]);
+      blocks.forEach((el, i) => {
+        if (!lines[i]) return;
+        if (!both.checked) { el.innerText = lines[i]; return; }
+        const added = document.createElement("span");    // bilingual: the translation sits under the original
+        added.style.cssText = "display:block;opacity:.7"; added.textContent = lines[i]; el.append(added);
+      });
       btn.textContent = "Show original"; note.textContent = "";
     } catch (err) { note.textContent = err.message; }
     btn.disabled = false;

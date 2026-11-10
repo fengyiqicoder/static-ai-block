@@ -21,7 +21,10 @@
 .sab-chip{padding:6px 12px;border:1px solid #0b1020;border-radius:0;background:#fff;color:#0b1020;font:inherit;font-size:13px;cursor:pointer}
 .sab-chip:hover{border-color:#0b5fff;color:#0b5fff}
 .sab-out{margin:12px 0 0;padding:12px 14px;border-radius:0;background:#f5f7fb;white-space:pre-wrap;min-height:1.5em}
-.sab-out:empty{display:none}
+.sab-out:empty:not(.sab-wait){display:none}
+.sab-wait:empty::before{content:"Thinking…";color:transparent;background:linear-gradient(90deg,#99a2b5 30%,#0b1020 50%,#99a2b5 70%) 0 0/200% 100%;-webkit-background-clip:text;background-clip:text;animation:sab-wait 1.2s linear infinite}
+@keyframes sab-wait{from{background-position:100% 0}to{background-position:-100% 0}}
+@media (prefers-reduced-motion:reduce){.sab-wait:empty::before{animation:none;color:#99a2b5}}
 .sab-note{margin:10px 0 0;font-size:12px;color:#99a2b5}
 .sab-powered{margin:12px 0 0;text-align:right;font-size:11px;color:#99a2b5}.sab-powered a{color:inherit;text-decoration:none}.sab-powered a:hover{text-decoration:underline}
 </style>
@@ -41,10 +44,10 @@
     const note = document.createElement("p"); note.className = "code-note";
     pre.append(btn); pre.after(note);
     btn.addEventListener("click", async () => {
-      note.textContent = "…";
+      note.textContent = ""; note.classList.add("sab-wait");
       try {
         await onetag.ask("Explain what this code does in plain language, two or three sentences.", pre.innerText.replace("✦ Explain", ""), {
-          stream: (d) => { if (note.textContent === "…") note.textContent = ""; note.textContent += d; }, maxTokens: 150,
+          stream: (d) => { note.textContent += d; }, maxTokens: 150,
         });
       } catch (err) { note.textContent = err.message; }
     });

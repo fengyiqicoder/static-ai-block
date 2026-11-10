@@ -21,7 +21,10 @@
 .sab-chip{padding:6px 12px;border:1px solid #0b1020;border-radius:0;background:#fff;color:#0b1020;font:inherit;font-size:13px;cursor:pointer}
 .sab-chip:hover{border-color:#0b5fff;color:#0b5fff}
 .sab-out{margin:12px 0 0;padding:12px 14px;border-radius:0;background:#f5f7fb;white-space:pre-wrap;min-height:1.5em}
-.sab-out:empty{display:none}
+.sab-out:empty:not(.sab-wait){display:none}
+.sab-wait:empty::before{content:"Thinking…";color:transparent;background:linear-gradient(90deg,#99a2b5 30%,#0b1020 50%,#99a2b5 70%) 0 0/200% 100%;-webkit-background-clip:text;background-clip:text;animation:sab-wait 1.2s linear infinite}
+@keyframes sab-wait{from{background-position:100% 0}to{background-position:-100% 0}}
+@media (prefers-reduced-motion:reduce){.sab-wait:empty::before{animation:none;color:#99a2b5}}
 .sab-note{margin:10px 0 0;font-size:12px;color:#99a2b5}
 .sab-powered{margin:12px 0 0;text-align:right;font-size:11px;color:#99a2b5}.sab-powered a{color:inherit;text-decoration:none}.sab-powered a:hover{text-decoration:underline}
 </style>
@@ -35,18 +38,22 @@
     <button class="sab-btn" id="dr-btn" type="button">Draft reply</button>
   </div>
   <textarea class="sab-area" id="dr-out" rows="5" placeholder="The reply appears here…" style="margin-top:10px"></textarea>
+  <button class="sab-chip" id="dr-copy" type="button" hidden style="margin-top:8px">Copy reply</button>
 <p class="sab-powered"><a href="https://onetagai.com/?ref=static-ai-block" rel="noopener">Powered by OneTag AI</a></p>
 </section>
 
 <script type="module">
-  const src = document.getElementById("dr-in"), tone = document.getElementById("dr-tone"), out = document.getElementById("dr-out");
+  const src = document.getElementById("dr-in"), tone = document.getElementById("dr-tone"), out = document.getElementById("dr-out"), copy = document.getElementById("dr-copy");
   document.getElementById("dr-btn").addEventListener("click", async () => {
-    out.value = "";
+    out.value = ""; out.placeholder = "Thinking…"; copy.hidden = true;
     try {
       await onetag.ask(`Write a reply to this message. Tone: ${tone.value}. Sign as "The team". Output only the reply.`, src.value, {
         stream: (d) => { out.value += d; }, maxTokens: 250,
       });
+      copy.hidden = false;
     } catch (err) { out.value = err.message; }
+    out.placeholder = "The reply appears here…";
   });
+  copy.addEventListener("click", async () => { await navigator.clipboard.writeText(out.value); copy.textContent = "Copied"; setTimeout(() => { copy.textContent = "Copy reply"; }, 1500); });
 </script>
 <!-- Static AI Block · free AI blocks for static sites · https://github.com/fengyiqicoder/static-ai-block -->

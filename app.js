@@ -5,23 +5,32 @@
 
   const usesNav = document.getElementById("uses"), blurb = document.getElementById("use-blurb");
 
-  // Page-reading blocks answer from a hidden sample page; which page depends on the use that is selected.
-  const page = (sample) => `<main><p style="position:absolute;left:-9999px;top:0">${sample}</p>`;
+  // Page-reading blocks work on a sample page; which page depends on the use that is selected.
+  // Its first sentence is the heading, the rest are short paragraphs. It sits off-screen, except under
+  // the blocks that change it or point at it. build.mjs has the same function.
+  const page = (sample, b) => {
+    const [head, ...rest] = sample.replace(/\.\s+/g, ".\n").split("\n"), paras = [];
+    for (let i = 0; i < rest.length; i += 2) paras.push(rest.slice(i, i + 2).join(" "));
+    const box = b.showsPage ? "max-width:600px;box-sizing:border-box;margin:0 0 14px;padding:12px 14px;background:#fff;border:1px dashed #99a2b5" : "position:absolute;left:-9999px;top:0;width:600px";
+    return `<main${b.id === "chat-launcher" ? ' style="min-height:560px"' : ""}><article style="${box}"><h1 style="margin:0 0 6px;font-size:17px;line-height:1.3">${head}</h1>${paras.map((p) => `<p style="margin:0 0 6px;font-size:14px">${p}</p>`).join("")}</article>`;
+  };
 
   // Each card is the block itself, running live inside a plain page with the demo key swapped in.
-  const READS_PAGE = new Set(["ask-this-page","summarize-page","explain-selection","translate-page","quiz","code-explain"]);
   const shell = (html, b, sample) => `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <style>body{margin:0;padding:14px;background:#f5f7fb;font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#0b1020}</style></head>
-<body>${READS_PAGE.has(b.id) ? page(sample) : "<main>"}${html.replace(/YOUR_ONETAG_KEY/g, previewKey)}</main><script>new ResizeObserver(() => parent.postMessage({ sabHeight: Math.ceil(document.body.getBoundingClientRect().height) }, "*")).observe(document.body);</script></body></html>`;
+<body>${b.readsPage ? page(sample, b) : "<main>"}${html.replace(/YOUR_ONETAG_KEY/g, previewKey)}</main><script>new ResizeObserver(() => parent.postMessage({ sabHeight: Math.ceil(document.body.getBoundingClientRect().height) }, "*")).observe(document.body);</script></body></html>`;
 
-  const toAI = (b, source) => `Add this AI block to my site. It uses OneTag AI; docs for the API are at https://onetagai.com/llms.txt
+  const toAI = (b, source) => (b.needsKey ? `Add this AI block to my site. It uses OneTag AI; docs for the API are at https://onetagai.com/llms.txt
 
 1. Insert the block below into the page where it fits. Keep its markup and script as they are; adapt colors or fonts only if my site has a design system.
 2. If I do not have a OneTag AI key yet: ask me for my email, then run
    curl -X POST https://onetagai.com/api/signup -H "Content-Type: application/json" -d '{"email":"MY_EMAIL"}'
    The key arrives in my inbox (one key per email). Ask me to paste it, then replace YOUR_ONETAG_KEY (this key is designed to be public: it ships in the HTML like an analytics ID) in the block with it.
 3. Open the page and try the block once. The free allowance is 1,000,000 tokens per account.
+` : `Add this block to my site. It is plain HTML and JavaScript and needs no key, no API and no backend.
 
+Insert the block below into the page where it fits. Keep its markup and script as they are; adapt colors or fonts only if my site has a design system. Then open the page and try it once.
+`) + `
 --- Block: ${b.title} (${b.description}) ---
 ${source}`;
 
@@ -30,10 +39,10 @@ ${source}`;
     el.className = "card"; el.id = b.id;
     el.innerHTML = `<div class="card-inner">
       <div class="card-head"><h3>${b.title}</h3><span class="tag">${b.id}</span></div>
-      <div class="card-live"><iframe loading="lazy" title="${b.title} (live)" sandbox="allow-scripts allow-same-origin allow-forms allow-modals"></iframe></div>
+      <div class="card-live"><iframe loading="lazy" title="${b.title} (live)" sandbox="allow-scripts allow-same-origin allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox" allow="microphone; clipboard-write"></iframe></div>
       <pre class="card-code" hidden><code></code></pre>
       <div class="card-bar">
-        <span class="card-meta">${b.lines} lines · HTML + JS</span>
+        <span class="card-meta">${b.lines} lines · HTML + JS${b.needsKey ? "" : " · no key"}</span>
         <span class="card-actions">
           <button type="button" class="ghost" data-code aria-pressed="false">Code</button>
           <button type="button" class="ghost" data-copy>Copy block</button>
@@ -46,7 +55,7 @@ ${source}`;
     let source = "", shown = sample;
     fetch(b.file).then((r) => r.text()).then((src) => { source = src; frame.srcdoc = shell(src, b, shown); code.querySelector("code").textContent = src; });
     // Reload the preview only when the sample page under it actually changes.
-    el.setSample = (next) => { if (next === shown || !READS_PAGE.has(b.id)) return; shown = next; if (source) frame.srcdoc = shell(source, b, shown); };
+    el.setSample = (next) => { if (next === shown || !b.readsPage) return; shown = next; if (source) frame.srcdoc = shell(source, b, shown); };
     codeBtn.addEventListener("click", () => {
       const show = code.hidden; code.hidden = !show; live.hidden = show; codeBtn.setAttribute("aria-pressed", String(show));
       fit(el);

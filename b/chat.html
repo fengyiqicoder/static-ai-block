@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chat: free AI block for any static website | Static AI Block</title>
+<meta name="description" content="A full AI chat with streaming Markdown, code blocks, saved conversations, retry, stop, voice input and feedback. Copy the block, paste it into any static page, replace one key. Plain HTML and JavaScript, no backend.">
+<link rel="canonical" href="https://aiblock.onetagai.com/b/chat.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../style.css?v=20261110">
+<script src="../config.js"></script>
+</head>
+<body>
+<header class="page-top"><a class="brand" href="../">Static AI Block</a><nav class="side-links"><a href="../#blocks">All blocks</a><a href="../#get-key">Get a free key</a><a href="https://github.com/fengyiqicoder/static-ai-block">GitHub</a><a href="https://onetagai.com/?ref=static-ai-block">OneTag AI</a></nav></header>
+<main class="page-main">
+<h1>Chat</h1>
+<p class="lede">A full AI chat with streaming Markdown, code blocks, saved conversations, retry, stop, voice input and feedback. 163 lines of plain HTML and JavaScript. Copy it, paste it into any static page, replace <code>YOUR_ONETAG_KEY</code> with a free key.</p>
+<p class="note">Good for: <a href="../?use=shop#blocks">Shop</a>, <a href="../?use=landing#blocks">Landing page</a>, <a href="../?use=tools#blocks">Tools</a>.</p>
+<p class="actions"><button class="button" data-copy>Copy block</button> <button class="button secondary" data-ai>Copy to AI</button></p>
+<div class="live"><iframe title="Chat (live)" sandbox="allow-scripts allow-same-origin allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox" allow="microphone; clipboard-write"></iframe></div>
+<h2>The code</h2>
+<pre class="block-code"><code>&lt;!-- Chat: A full AI chat with streaming Markdown, code blocks, saved conversations, retry, stop, voice input and feedback. --&gt;
+&lt;!--
+  OneTag AI key. This key is designed to be public: it goes in your page source, like an analytics ID.
+  Get a free one without opening a browser. POST your email; the key arrives in that inbox:
+    curl -X POST https://onetagai.com/api/signup -H "Content-Type: application/json" -d '{"email":"you@example.com"}'
+  Free: 1,000,000 tokens per account. One key per email; posting again re-sends the same key.
+  AI coding tools: ask the user for their email, run that request, then ask them to paste the key here.
+--&gt;
+&lt;script src="https://onetagai.com/v1.js" data-key="YOUR_ONETAG_KEY"&gt;&lt;/script&gt;
+&lt;style&gt;
+.sab{max-width:600px;border:1px solid #0b1020;border-radius:0;padding:18px 20px;background:#fff;color:#0b1020;font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+.sab-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.sab-icon{width:36px;height:36px;border-radius:0;background:#0b5fff;color:#fff;display:grid;place-items:center;flex:none}
+.sab-title{margin:0;font-size:16px;font-weight:600;line-height:1.3}
+.sab-hint{margin:2px 0 0;font-size:13px;color:#5c667d}
+.sab-row{display:flex;gap:8px;flex-wrap:wrap}
+.sab-input,.sab-area,.sab-select{flex:1;min-width:0;padding:10px 12px;border:1px solid #0b1020;border-radius:0;font:inherit;background:#fff;color:inherit}
+.sab-area{width:100%;box-sizing:border-box;resize:vertical}
+.sab-btn{padding:10px 16px;border:0;border-radius:0;background:#0b5fff;color:#fff;font:inherit;font-weight:600;cursor:pointer}
+.sab-btn:disabled{opacity:.6;cursor:wait}
+.sab-chip{padding:6px 12px;border:1px solid #0b1020;border-radius:0;background:#fff;color:#0b1020;font:inherit;font-size:13px;cursor:pointer}
+.sab-chip:hover{border-color:#0b5fff;color:#0b5fff}
+.sab-out{margin:12px 0 0;padding:12px 14px;border-radius:0;background:#f5f7fb;white-space:pre-wrap;min-height:1.5em}
+.sab-out:empty:not(.sab-wait){display:none}
+.sab-wait:empty::before{content:"Thinking…";color:transparent;background:linear-gradient(90deg,#99a2b5 30%,#0b1020 50%,#99a2b5 70%) 0 0/200% 100%;-webkit-background-clip:text;background-clip:text;animation:sab-wait 1.2s linear infinite}
+@keyframes sab-wait{from{background-position:100% 0}to{background-position:-100% 0}}
+@media (prefers-reduced-motion:reduce){.sab-wait:empty::before{animation:none;color:#99a2b5}}
+.sab-note{margin:10px 0 0;font-size:12px;color:#99a2b5}
+.sab-powered{margin:12px 0 0;text-align:right;font-size:11px;color:#99a2b5}.sab-powered a{color:inherit;text-decoration:none}.sab-powered a:hover{text-decoration:underline}
+&lt;/style&gt;
+
+&lt;section class="sab" id="sab-chat"&gt;
+  &lt;div class="sab-head"&gt;&lt;span class="sab-icon" aria-hidden="true"&gt;&lt;svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.7A8 8 0 1 1 21 12z"/&gt;&lt;/svg&gt;&lt;/span&gt;
+    &lt;div&gt;&lt;h3 class="sab-title"&gt;Chat&lt;/h3&gt;&lt;p class="sab-hint"&gt;A full AI chat: streaming Markdown, code blocks, saved conversations, retry, stop, voice and feedback.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+  &lt;div class="sab-row" style="margin-bottom:10px"&gt;
+    &lt;select class="sab-select" id="chat-threads" aria-label="Conversations"&gt;&lt;/select&gt;
+    &lt;button class="sab-chip" id="chat-new" type="button"&gt;New chat&lt;/button&gt;
+    &lt;button class="sab-chip" id="chat-del" type="button"&gt;Delete&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div id="chat-log" aria-live="polite"&gt;&lt;/div&gt;
+  &lt;div class="sab-row" id="chat-chips" style="margin-bottom:10px"&gt;
+    &lt;button class="sab-chip" type="button"&gt;Write a JavaScript debounce function&lt;/button&gt;
+    &lt;button class="sab-chip" type="button"&gt;Three tips for a faster website&lt;/button&gt;
+    &lt;button class="sab-chip" type="button"&gt;A haiku about static sites&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;form class="sab-row" id="chat-form"&gt;
+    &lt;input class="sab-input" id="chat-input" placeholder="Message…" autocomplete="off" aria-label="Message"&gt;
+    &lt;button class="sab-chip" id="chat-mic" type="button" hidden aria-label="Dictate" aria-pressed="false"&gt;&lt;svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block"&gt;&lt;rect x="9" y="3" width="6" height="11" rx="3"/&gt;&lt;path d="M5 11a7 7 0 0 0 14 0M12 18v3"/&gt;&lt;/svg&gt;&lt;/button&gt;
+    &lt;button class="sab-btn" id="chat-send"&gt;Send&lt;/button&gt;
+  &lt;/form&gt;
+&lt;p class="sab-powered"&gt;&lt;a href="https://onetagai.com/?ref=static-ai-block" rel="noopener"&gt;Powered by OneTag AI&lt;/a&gt;&lt;/p&gt;
+&lt;/section&gt;
+&lt;style&gt;#chat-log{display:flex;flex-direction:column;gap:10px;max-height:380px;overflow-y:auto;margin-bottom:10px}#chat-log:empty{display:none}.chat-user{align-self:flex-end;max-width:85%;padding:8px 12px;background:#0b5fff;color:#fff;white-space:pre-wrap;overflow-wrap:anywhere}.chat-md{padding:10px 14px;background:#f5f7fb;overflow-wrap:anywhere}.chat-md&gt;*{margin:0 0 8px}.chat-md&gt;:last-child{margin-bottom:0}.chat-md h4{font-size:15px}.chat-md ul,.chat-md ol{padding-left:20px}.chat-md code{font:13px ui-monospace,Menlo,Consolas,monospace;background:#e6eaf2;padding:1px 4px}.chat-md pre{position:relative;padding:10px 12px;background:#0b1020;color:#f5f7fb;overflow-x:auto}.chat-md pre code{background:none;padding:0;color:inherit}.chat-copy{position:absolute;top:6px;right:6px;border:1px solid #5c667d;background:#0b1020;color:#f5f7fb;font:11px system-ui,sans-serif;padding:2px 6px;cursor:pointer}.chat-acts{display:flex;gap:2px;margin-top:4px}.chat-acts button{display:inline-flex;align-items:center;border:0;background:none;color:#5c667d;font:12px system-ui,sans-serif;padding:3px 6px;cursor:pointer}.chat-acts button:hover,.chat-acts [aria-pressed=true]{color:#0b5fff}.chat-md.sab-wait+.chat-acts{display:none}.chat-err{margin:0;font-size:13px;color:#b91c1c}#chat-mic[aria-pressed=true]{border-color:#b91c1c;color:#b91c1c}&lt;/style&gt;
+
+&lt;script type="module"&gt;
+  const SYSTEM = "You are a helpful assistant on this website. Answer briefly, in Markdown.";   // who the assistant is
+  const CONTEXT = null;      // optional knowledge: a string, or an element such as document.querySelector("main")
+  const STORE = "sab-chat";  // conversations are kept in this browser only (localStorage)
+
+  const $ = (id) =&gt; document.getElementById(id);
+  const log = $("chat-log"), input = $("chat-input"), send = $("chat-send"), picker = $("chat-threads"), chips = $("chat-chips"), mic = $("chat-mic");
+  const esc = (s) =&gt; s.replace(/[&amp;&lt;&gt;"]/g, (c) =&gt; ({ "&amp;": "&amp;amp;", "&lt;": "&amp;lt;", "&gt;": "&amp;gt;", '"': "&amp;quot;" }[c]));
+  const THUMB = '&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M7 10v12M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8a2 2 0 0 1-1.9 1.4H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9z"/&gt;&lt;/svg&gt;';
+
+  // A small, safe Markdown renderer: everything is escaped first, then code, bold, italic, links, headings and lists are added back.
+  const inline = (s) =&gt; s.split(/(`[^`\n]+`)/).map((p, i) =&gt; i % 2 ? `&lt;code&gt;${esc(p.slice(1, -1))}&lt;/code&gt;` : esc(p)
+    .replace(/\*\*([^*]+)\*\*/g, "&lt;b&gt;$1&lt;/b&gt;").replace(/\*([^*\s][^*]*)\*/g, "&lt;i&gt;$1&lt;/i&gt;")
+    .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '&lt;a href="$2" target="_blank" rel="noopener"&gt;$1&lt;/a&gt;')).join("");
+  function md(src) {
+    return src.split("```").map((part, i) =&gt; {
+      if (i % 2) return `&lt;pre&gt;&lt;button class="chat-copy" type="button"&gt;Copy&lt;/button&gt;&lt;code&gt;${esc(part.replace(/^[\w+-]*\n/, "").replace(/\n$/, ""))}&lt;/code&gt;&lt;/pre&gt;`;
+      let html = "", list = "";
+      const endList = () =&gt; { if (list) html += `&lt;/${list}&gt;`; list = ""; };
+      for (const line of part.split("\n")) {
+        const item = line.match(/^\s*(?:[-*]|(\d+)[.)])\s+(.*)/), head = line.match(/^#{1,6}\s+(.*)/);
+        if (item) { const tag = item[1] ? "ol" : "ul"; if (list !== tag) { endList(); html += `&lt;${tag}&gt;`; list = tag; } html += `&lt;li&gt;${inline(item[2])}&lt;/li&gt;`; continue; }
+        endList();
+        if (head) html += `&lt;h4&gt;${inline(head[1])}&lt;/h4&gt;`; else if (line.trim()) html += `&lt;p&gt;${inline(line)}&lt;/p&gt;`;
+      }
+      endList();
+      return html;
+    }).join("");
+  }
+
+  let threads = [];
+  try { threads = JSON.parse(localStorage.getItem(STORE)) || []; } catch {}
+  const newThread = () =&gt; { const t = { id: Date.now().toString(36), title: "New chat", messages: [] }; threads.unshift(t); return t; };
+  const save = () =&gt; { try { localStorage.setItem(STORE, JSON.stringify(threads.filter((t) =&gt; t.messages.length).slice(0, 20))); } catch {} };
+  let thread = threads[0] || newThread(), busy = null;   // busy: the AbortController of the answer being streamed
+
+  function bubble(m, i) {
+    const el = document.createElement("div");
+    if (m.role === "user") { el.className = "chat-user"; el.textContent = m.content; return el; }
+    el.className = "chat-ai"; el.dataset.i = i;
+    el.innerHTML = `&lt;div class="chat-md"&gt;${md(m.content)}&lt;/div&gt;&lt;div class="chat-acts"&gt;&lt;button type="button" data-act="copy"&gt;Copy&lt;/button&gt;${i === thread.messages.length - 1 ? '&lt;button type="button" data-act="retry"&gt;Retry&lt;/button&gt;' : ""}
+      &lt;button type="button" data-act="up" aria-label="Good answer" aria-pressed="${m.vote === "up"}"&gt;${THUMB}&lt;/button&gt;&lt;button type="button" data-act="down" aria-label="Bad answer" aria-pressed="${m.vote === "down"}" style="transform:rotate(180deg)"&gt;${THUMB}&lt;/button&gt;&lt;/div&gt;`;
+    return el;
+  }
+  function draw() {
+    picker.innerHTML = threads.map((t) =&gt; `&lt;option value="${t.id}"&gt;${esc(t.title)}&lt;/option&gt;`).join(""); picker.value = thread.id;
+    log.replaceChildren(...thread.messages.map(bubble));
+    chips.hidden = thread.messages.length &gt; 0; log.scrollTop = log.scrollHeight;
+  }
+
+  async function answer() {                              // the last message is the user's; stream the reply under it
+    const t = thread, q = t.messages.at(-1).content, history = t.messages.slice(0, -1).slice(-6).map(({ role, content }) =&gt; ({ role, content }));
+    const m = { role: "assistant", content: "" }; t.messages.push(m); draw();
+    const out = log.lastElementChild.querySelector(".chat-md"); out.classList.add("sab-wait");
+    busy = new AbortController(); send.textContent = "Stop";
+    try {
+      await onetag.ask(q, CONTEXT, { system: SYSTEM, history, maxTokens: 400, signal: busy.signal,
+        stream: (d) =&gt; { m.content += d; out.innerHTML = md(m.content); log.scrollTop = log.scrollHeight; } });
+    } catch (err) {
+      if (err.code !== "aborted") {                      // a failed turn is taken back so the question can be sent again
+        t.messages.splice(-2); busy = null; send.textContent = "Send"; draw(); input.value = q;
+        const p = document.createElement("p"); p.className = "chat-err"; p.textContent = err.message; log.append(p);
+        return;
+      }
+      if (!m.content) m.content = "*Stopped.*";
+    }
+    if (t.title === "New chat") t.title = q.slice(0, 40);
+    busy = null; send.textContent = "Send"; save(); draw();
+  }
+  const ask = (q) =&gt; { thread.messages.push({ role: "user", content: q }); answer(); };
+
+  $("chat-form").addEventListener("submit", (e) =&gt; {
+    e.preventDefault();
+    if (busy) return busy.abort();                       // while an answer streams, the button is Stop
+    const q = input.value.trim(); if (!q) return;
+    input.value = ""; ask(q);
+  });
+  for (const chip of chips.children) chip.addEventListener("click", () =&gt; { if (!busy) ask(chip.textContent); });
+  picker.addEventListener("change", () =&gt; { if (busy) return draw(); thread = threads.find((t) =&gt; t.id === picker.value); draw(); });
+  $("chat-new").addEventListener("click", () =&gt; { if (busy || !thread.messages.length) return; thread = newThread(); draw(); input.focus(); });
+  $("chat-del").addEventListener("click", () =&gt; { if (busy) return; threads = threads.filter((t) =&gt; t !== thread); thread = threads[0] || newThread(); save(); draw(); });
+
+  log.addEventListener("click", async (e) =&gt; {
+    const btn = e.target.closest("button"); if (!btn) return;
+    const flash = () =&gt; { const t = btn.textContent; btn.textContent = "Copied"; setTimeout(() =&gt; { btn.textContent = t; }, 1500); };
+    if (btn.className === "chat-copy") { await navigator.clipboard.writeText(btn.nextElementSibling.textContent).then(flash, () =&gt; {}); return; }
+    const i = +btn.closest(".chat-ai").dataset.i, m = thread.messages[i], act = btn.dataset.act;
+    if (act === "copy") await navigator.clipboard.writeText(m.content).then(flash, () =&gt; {});
+    if (act === "retry" &amp;&amp; !busy) { thread.messages.splice(i); answer(); }
+    if (act === "up" || act === "down") {
+      m.vote = m.vote === act ? null : act; save();
+      for (const b of btn.parentNode.querySelectorAll("[aria-pressed]")) b.setAttribute("aria-pressed", String(b.dataset.act === m.vote));
+      // Listen for this event to send votes to your analytics: document.addEventListener("sab-feedback", (e) =&gt; console.log(e.detail))
+      if (m.vote) btn.dispatchEvent(new CustomEvent("sab-feedback", { bubbles: true, detail: { vote: m.vote, question: thread.messages[i - 1].content, answer: m.content } }));
+    }
+  });
+
+  const Speech = window.SpeechRecognition || window.webkitSpeechRecognition;   // voice input, where the browser has it; costs no tokens
+  if (Speech) {
+    const rec = new Speech(); let on = false, typed = "";
+    rec.lang = document.documentElement.lang || navigator.language; rec.interimResults = true; mic.hidden = false;
+    rec.onresult = (e) =&gt; { input.value = typed + [...e.results].map((r) =&gt; r[0].transcript).join(""); };
+    rec.onend = () =&gt; { on = false; mic.setAttribute("aria-pressed", "false"); };
+    mic.addEventListener("click", () =&gt; { if (on) return rec.stop(); typed = input.value ? input.value + " " : ""; on = true; mic.setAttribute("aria-pressed", "true"); rec.start(); });
+  }
+  draw();
+&lt;/script&gt;
+&lt;!-- Static AI Block · free AI blocks for static sites · https://github.com/fengyiqicoder/static-ai-block --&gt;
+</code></pre>
+<h2>Get a free key</h2>
+<p>Fill in your email at <a href="https://onetagai.com/?ref=static-ai-block">onetagai.com</a>, or run this and the key arrives in your inbox (one key per email, 1,000,000 free tokens):</p>
+<pre><code>curl -X POST https://onetagai.com/api/signup -H "Content-Type: application/json" -d '{"email":"you@example.com"}'</code></pre>
+<p class="note">All blocks: <a href="../">Static AI Block</a>. MIT. AI by <a href="https://onetagai.com/?ref=static-ai-block">OneTag AI</a>.</p>
+</main>
+<script>
+  const source = document.querySelector(".block-code code").textContent;
+  const pageHtml = "<main>";
+  const key = window.AI_BLOCKS_PREVIEW_KEY || "YOUR_ONETAG_KEY";
+  document.querySelector(".live iframe").srcdoc = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0;padding:14px;background:#f5f7fb;font:15px/1.5 system-ui,sans-serif;color:#0b1020}</style></head><body>` + pageHtml + source.replace(/YOUR_ONETAG_KEY/g, key) + `</main><script>new ResizeObserver(() => parent.postMessage({ sabHeight: Math.ceil(document.body.getBoundingClientRect().height) }, "*")).observe(document.body);<\/script></body></html>`;
+  window.addEventListener("message", (e) => { if (e.data && typeof e.data.sabHeight === "number") document.querySelector(".live iframe").style.height = Math.max(120, e.data.sabHeight + 2) + "px"; });
+  const flash = (btn, text) => { const t = btn.textContent; btn.textContent = text; setTimeout(() => { btn.textContent = t; }, 1500); };
+  document.querySelector("[data-copy]").addEventListener("click", async (e) => { try { await navigator.clipboard.writeText(source); flash(e.target, "Copied"); } catch {} });
+  document.querySelector("[data-ai]").addEventListener("click", async (e) => {
+    const text = "Add this AI block to my site. It uses OneTag AI; docs for the API are at https://onetagai.com/llms.txt\n\n1. Insert the block below into the page where it fits. Keep its markup and script as they are; adapt colors or fonts only if my site has a design system.\n2. If I do not have a OneTag AI key yet: ask me for my email, then run\n   curl -X POST https://onetagai.com/api/signup -H \"Content-Type: application/json\" -d '{\"email\":\"MY_EMAIL\"}'\n   The key arrives in my inbox (one key per email). Ask me to paste it, then replace YOUR_ONETAG_KEY in the block with it. This key is designed to be public: it ships in the HTML like an analytics ID.\n3. Open the page and try the block once. The free allowance is 1,000,000 tokens per account.\n\n--- Block: Chat (A full AI chat with streaming Markdown, code blocks, saved conversations, retry, stop, voice input and feedback.) ---\n" + source;
+    try { await navigator.clipboard.writeText(text); flash(e.target, "Copied for your agent"); } catch {}
+  });
+</script>
+</body>
+</html>
