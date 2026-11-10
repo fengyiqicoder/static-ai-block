@@ -1,5 +1,76 @@
 {
-  "generated": "2026-11-09",
+  "generated": "2026-11-10",
+  "sample": "Sample page: a note on sourdough. A starter is flour and water left to ferment; it leavens bread with wild yeast. Feed it daily at room temperature or weekly in the fridge. A loaf needs about 20% starter, a 12 to 18 hour cold proof and a 250 °C oven with steam for the first 20 minutes.",
+  "uses": [
+    {
+      "id": "docs",
+      "label": "Docs",
+      "blurb": "Readers ask in plain words and get the answer from the page they are on. Previews read a sample install guide.",
+      "sample": "Sample docs page: Installing the Tidepool CLI. Requires Node 20 or newer. Install with npm install -g tidepool, then run tidepool login and paste the token from your dashboard. Config lives in tidepool.toml at the project root; the only required field is project. Run tidepool deploy to publish; add --dry-run to see what would change. On Windows use PowerShell 7; WSL is supported, cmd.exe is not. To uninstall, run npm uninstall -g tidepool and delete ~/.tidepool.",
+      "blocks": [
+        "ask-this-page",
+        "code-explain",
+        "explain-selection",
+        "summarize-page",
+        "translate-page",
+        "faq-bot",
+        "quiz"
+      ]
+    },
+    {
+      "id": "shop",
+      "label": "Shop",
+      "blurb": "Answer pre-sale questions from the product page and let shoppers search the catalogue in plain words. Previews read a sample product page.",
+      "sample": "Sample product page: Merino beanie, grey, $38. 100% merino wool, 190 gsm, made in Portugal. One size, fits heads 54 to 60 cm. Hand wash cold and dry flat; do not tumble dry. In stock. Ships in 2 to 4 business days in the EU, 5 to 8 elsewhere; shipping is free over $80, otherwise $9 flat. 30-day returns, unused, in the original packaging. Also available in navy and black.",
+      "blocks": [
+        "ask-this-page",
+        "smart-search",
+        "faq-bot",
+        "translate-page",
+        "describe-image",
+        "extract-json"
+      ]
+    },
+    {
+      "id": "landing",
+      "label": "Landing page",
+      "blurb": "Answer visitors' questions from your own copy before they leave. Previews read a sample product landing page.",
+      "sample": "Sample landing page: Paperboat, invoicing for freelancers. Send an invoice in 30 seconds, get paid by card or bank transfer, and let automatic reminders chase late payers. Free for up to 3 clients; Pro is $9 a month with unlimited clients and recurring invoices. No contract; export everything as CSV at any time. Works in the EU, UK and US. Not built for teams of more than 5 people or for inventory tracking.",
+      "blocks": [
+        "faq-bot",
+        "ask-this-page",
+        "translate-page",
+        "extract-json"
+      ]
+    },
+    {
+      "id": "blog",
+      "label": "Blog",
+      "blurb": "Posts that summarize, translate and explain themselves. Previews read a sample post.",
+      "sample": "Sample page: a note on sourdough. A starter is flour and water left to ferment; it leavens bread with wild yeast. Feed it daily at room temperature or weekly in the fridge. A loaf needs about 20% starter, a 12 to 18 hour cold proof and a 250 °C oven with steam for the first 20 minutes.",
+      "blocks": [
+        "summarize-page",
+        "ask-this-page",
+        "translate-page",
+        "explain-selection",
+        "code-explain",
+        "quiz",
+        "describe-image"
+      ]
+    },
+    {
+      "id": "tools",
+      "label": "Tools",
+      "blurb": "Single-purpose pages: paste text or an image in, get something useful out.",
+      "sample": "Sample page: a note on sourdough. A starter is flour and water left to ferment; it leavens bread with wild yeast. Feed it daily at room temperature or weekly in the fridge. A loaf needs about 20% starter, a 12 to 18 hour cold proof and a 250 °C oven with steam for the first 20 minutes.",
+      "blocks": [
+        "rewrite",
+        "draft-reply",
+        "extract-json",
+        "describe-image"
+      ]
+    }
+  ],
   "blocks": [
     {
       "id": "summarize-page",
@@ -8,6 +79,10 @@
       "title": "Summarize this page",
       "description": "Summarize this page in one click.",
       "group": "Read",
+      "uses": [
+        "docs",
+        "blog"
+      ],
       "lines": 56
     },
     {
@@ -17,6 +92,12 @@
       "title": "Ask this page",
       "description": "Ask anything about this page and get an answer from it.",
       "group": "Read",
+      "uses": [
+        "docs",
+        "shop",
+        "landing",
+        "blog"
+      ],
       "lines": 61
     },
     {
@@ -26,6 +107,11 @@
       "title": "FAQ bot",
       "description": "Answers only from your FAQ, says \"I don't know\" otherwise.",
       "group": "Chat",
+      "uses": [
+        "docs",
+        "shop",
+        "landing"
+      ],
       "lines": 62
     },
     {
@@ -35,6 +121,9 @@
       "title": "Rewrite",
       "description": "Make any text shorter, longer, formal or friendly.",
       "group": "Write",
+      "uses": [
+        "tools"
+      ],
       "lines": 56
     },
     {
@@ -44,6 +133,12 @@
       "title": "Translate this page",
       "description": "Translate the whole page into another language.",
       "group": "Read",
+      "uses": [
+        "docs",
+        "shop",
+        "landing",
+        "blog"
+      ],
       "lines": 63
     },
     {
@@ -53,6 +148,9 @@
       "title": "Draft a reply",
       "description": "Paste a message, get a reply in the tone you pick.",
       "group": "Write",
+      "uses": [
+        "tools"
+      ],
       "lines": 53
     },
     {
@@ -62,6 +160,11 @@
       "title": "Extract to JSON",
       "description": "Turn messy text into structured fields.",
       "group": "Extract",
+      "uses": [
+        "shop",
+        "landing",
+        "tools"
+      ],
       "lines": 51
     },
     {
@@ -71,6 +174,9 @@
       "title": "Smart search",
       "description": "Search a list in plain words; matches light up.",
       "group": "Extract",
+      "uses": [
+        "shop"
+      ],
       "lines": 62
     },
     {
@@ -80,6 +186,10 @@
       "title": "Explain any selection",
       "description": "Select any text on the page to get it explained.",
       "group": "Read",
+      "uses": [
+        "docs",
+        "blog"
+      ],
       "lines": 63
     },
     {
@@ -89,6 +199,11 @@
       "title": "Describe an image",
       "description": "Get alt text for any image.",
       "group": "See",
+      "uses": [
+        "shop",
+        "blog",
+        "tools"
+      ],
       "lines": 55
     },
     {
@@ -98,6 +213,10 @@
       "title": "Quiz from this page",
       "description": "Turn this page into a three-question quiz.",
       "group": "Learn",
+      "uses": [
+        "docs",
+        "blog"
+      ],
       "lines": 57
     },
     {
@@ -107,6 +226,10 @@
       "title": "Explain code",
       "description": "Adds an Explain button to every code block.",
       "group": "Learn",
+      "uses": [
+        "docs",
+        "blog"
+      ],
       "lines": 54
     }
   ]

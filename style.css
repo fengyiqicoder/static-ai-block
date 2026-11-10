@@ -196,6 +196,18 @@ pre code { font-size: inherit; background: none; border: 0; padding: 0; }
 
 section.blocks { padding: 72px 0; border-bottom: 1px solid var(--line); }
 
+/* Use filter: one segmented row above the grid; the pressed use decides which blocks show */
+
+.uses { display: inline-flex; max-width: 100%; border: 1px solid var(--line-strong); background: var(--paper); }
+.uses button { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 8px; height: 48px; padding: 0 20px; font: 600 15px/1 var(--sans); color: var(--text); background: none; border: 0; border-radius: 0; cursor: pointer; white-space: nowrap; }
+.uses button + button { border-left: 1px solid var(--line-strong); }
+.uses button:hover { background: var(--blue-soft); }
+.uses button:focus-visible { outline-offset: -2px; }
+.uses button span { font: 12px/1 var(--mono); color: var(--muted); }
+.uses button[aria-pressed="true"] { color: #fff; background: var(--text); }
+.uses button[aria-pressed="true"] span { color: var(--faint); }
+.use-blurb { min-height: 24px; margin: 12px 0 36px; color: var(--muted); font-size: 15px; line-height: 24px; }
+
 .grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -205,6 +217,7 @@ section.blocks { padding: 72px 0; border-bottom: 1px solid var(--line); }
 }
 
 .card { align-self: start; }
+.card[hidden] { display: none; }
 
 .card-inner { display: flex; flex-direction: column; border: 1px solid var(--line-strong); background: var(--paper); }
 
@@ -274,4 +287,7 @@ section.blocks { padding: 72px 0; border-bottom: 1px solid var(--line); }
   section.blocks, .getkey { padding: 48px 0; }
   .bar { display: flex; }
   .bar a { flex: 1 1 auto; justify-content: center; padding: 0 12px; }
+  .uses { display: flex; overflow-x: auto; }
+  /* Narrower chips so the next one peeks in and shows the row scrolls */
+  .uses button { height: 44px; padding: 0 12px; font-size: 14px; }
 }

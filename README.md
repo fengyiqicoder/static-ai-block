@@ -29,6 +29,16 @@ Using an AI coding tool? Paste this to it: *"Add a block from https://aiblock.on
 | [Quiz from this page](https://aiblock.onetagai.com/b/quiz.html) | Turn this page into a three-question quiz. |
 | [Explain code](https://aiblock.onetagai.com/b/code-explain.html) | Adds an Explain button to every code block. |
 
+Pick by what your site is; the gallery filters the same way.
+
+| Your site | Blocks that fit |
+| --- | --- |
+| [Docs](https://aiblock.onetagai.com/?use=docs) | Ask this page, Explain code, Explain any selection, Summarize this page, Translate this page, FAQ bot, Quiz from this page |
+| [Shop](https://aiblock.onetagai.com/?use=shop) | Ask this page, Smart search, FAQ bot, Translate this page, Describe an image, Extract to JSON |
+| [Landing page](https://aiblock.onetagai.com/?use=landing) | FAQ bot, Ask this page, Translate this page, Extract to JSON |
+| [Blog](https://aiblock.onetagai.com/?use=blog) | Summarize this page, Ask this page, Translate this page, Explain any selection, Explain code, Quiz from this page, Describe an image |
+| [Tools](https://aiblock.onetagai.com/?use=tools) | Rewrite, Draft a reply, Extract to JSON, Describe an image |
+
 Each block is one HTML file in [`blocks/`](blocks/): copy it, paste it into any page, replace `YOUR_ONETAG_KEY`. The gallery's **Copy block** button copies the file; **Copy to AI** copies it together with the setup steps for Cursor, Claude Code or any coding agent.
 
 ## Get a free key
